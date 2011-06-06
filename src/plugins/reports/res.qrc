@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/">
+        <file alias="stud_list">res/student_list.xml</file>
+        <file alias="tst_results">res/tst_results.xml</file>
+    </qresource>
+</RCC>

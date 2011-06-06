@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="windows-1251"?>
+<NCReport
+	name="artlist_c1"
+	pageSize="A4"
+	topMargin="10"
+	bottomMargin="14"
+	leftMargin="10"
+	rightMargin="10"
+	masterAlias="prod"
+	backcolor="#FFFFFF">
+
+<queries>
+	<query alias="prod">
+			SELECT
+      student.surname as family,
+      student.name as name,
+      student.patronymic as otch,
+      groups.caption as gr,
+      specialty.caption as spec
+      FROM
+      groups, student, specialty
+      where student.group = groups.id
+      AND specialty.id = groups.special
+      ORDER BY groups.caption
+	</query>
+	<query alias="company">
+		select 'ПКТУ' as name, 
+			'10100 Nowhere, Something str. 55.' as fulladdress,
+			'Taxcode: 00000000-0-00' as taxcode,
+			'Account no.: 00000000-00000000-00000000' as account,
+			'Phone: 555-8740-14' as phone,
+			'Fax: 555-8741-15' as fax,
+			'E-mail: info@usefulcompany.com' as mail
+	</query>
+</queries>
+
+<variables>
+	<variable name="cnt1" type="numeric" funcType="count"></variable>
+</variables>
+
+<pageHeader height="23">
+	<field ftype="sql" fontSize="8" posX="130" posY="4" width="60" alignmentH="right">company.name</field>
+	<field ftype="sql" fontSize="8" posX="130" posY="8" width="60" alignmentH="right">company.fulladdress</field>
+	<label fontSize="12" fontWeight="bold" posX="0" posY="8" alignmentH="center" forecolor="#0000FF">Список учащихся</label>
+
+	<rectangle posX="0" posY="14" height="6" lineWidth="1" roundValue="0" lineColor="#0000FF"></rectangle>
+	<label fontSize="8" posX="1" posY="15" alignmentH="left" forecolor="#0000FF">№</label>
+	<label fontSize="8" posX="15" posY="15" alignmentH="left" forecolor="#0000FF">Имя</label>
+	<label fontSize="8" posX="60" posY="15" alignmentH="left" forecolor="#0000FF">Фамилия</label>
+	<label fontSize="8" posX="101" posY="15" alignmentH="right" width="19" forecolor="#0000FF">Отчество</label>
+	<!--<label fontSize="8" posX="121" posY="15" alignmentH="right" width="19" forecolor="#0000FF">Price II.</label>
+	<label fontSize="8" posX="141" posY="15" alignmentH="right" width="19" forecolor="#0000FF">Price III.</label>
+	<label fontSize="8" posX="161" posY="15" alignmentH="right" width="19" forecolor="#0000FF">Value</label>
+	
+	<field ftype="sql" fontSize="8" posX="101" posY="15" alignmentH="right" width="19" forecolor="#0000FF">List price</field>
+	<field ftype="sql" fontSize="8" posX="121" posY="15" alignmentH="right" width="19" forecolor="#0000FF">Price II.</field>
+	<field ftype="sql" fontSize="8" posX="141" posY="15" alignmentH="right" width="19" forecolor="#0000FF">Price III.</field>
+	<field ftype="sql" fontSize="8" posX="161" posY="15" alignmentH="right" width="19" forecolor="#0000FF">Price IV.</field>
+	-->
+</pageHeader>
+
+<pageFooter height="11">
+	<field ftype="par" fontSize="8" posX="0" posY="0" width="190" wordbreak="true" embedString="List conditions: Product name like %1">prodFilt</field>
+	<line fromX="0" fromY="5" toX="190" toY="5" lineWidth="1" lineColor="#0000FF"></line>
+	<field ftype="sys" fontSize="6" posX="0" posY="6.4" embedString="%1">appinfo</field>
+	<field ftype="sys" fontSize="8" posX="175" posY="6.4" width="15" alignmentH="right" embedString="page %1">pageno</field>
+</pageFooter>
+
+<groups>
+	<group name="g1" groupExpression="gr" resetVariables="cnt1">
+		<groupHeader height="5">
+			<rectangle posX="0" posY="0" height="5" lineWidth="1" lineStyle="nopen" fillStyle="filled" fillColor="#CCCCFF" roundValue="0"></rectangle>
+			<field ftype="sql" fontSize="10" posX="3" posY="0" fontWeight="bold">gr</field>
+			<field ftype="sql" fontSize="10" posX="40" posY="0" fontWeight="bold">spec</field>
+		</groupHeader>
+		
+		<groupFooter height="6">
+			<label fontSize="8" posX="140" posY="1" alignmentH="left" width="30" forecolor="#0000FF">Студентов в группе:</label>
+			<line fromX="140" fromY="1" toX="190" toY="1" lineWidth="1" lineColor="#0000FF"></line> 
+			<field ftype="var" fontSize="8" posX="161" posY="1" width="20" type="numeric" alignmentH="right" numFormat="%L1" fontWeight="bold" numSeparation="true">cnt1</field>
+		</groupFooter>
+	</group>
+</groups>
+
+<detail height="4">
+ 	<field ftype="var" fontSize="8" posX="0" posY="0" width="6" alignmentH="right"></field>
+	<field ftype="sql" fontSize="8" posX="15" posY="0" width="23">family</field>
+	<field ftype="sql" fontSize="8" posX="60" posY="0" width="74">name</field>
+	<field ftype="sql" fontSize="8" posX="101" posY="0" width="20" alignmentH="right" numFormat="%10.3f" numSeparation="false">otch</field>
+</detail>
+</NCReport>
