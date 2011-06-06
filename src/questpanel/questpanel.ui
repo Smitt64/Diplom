@@ -1,0 +1,608 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>QuestPanel</class>
+ <widget class="QWidget" name="QuestPanel">
+  <property name="windowModality">
+   <enum>Qt::NonModal</enum>
+  </property>
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>517</width>
+    <height>451</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <property name="autoFillBackground">
+   <bool>false</bool>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">QLineEdit
+{
+border-image: url(:/images/frame.png) 4;
+border-width: 3;
+}
+
+QTabBar::tab {
+     background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
+                                 stop: 0 #E1E1E1, stop: 0.4 #DDDDDD,
+                                 stop: 0.5 #D8D8D8, stop: 1.0 #D3D3D3);
+     border: 2px solid #C4C4C3;
+	
+	border-bottom-color: rgba(0, 0, 0, 0);
+     border-top-left-radius: 4px;
+     border-top-right-radius: 4px;
+     min-width: 8ex;
+     padding: 2px;
+ }
+
+QTabBar::tab:selected, QTabBar::tab:hover {
+     background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
+                                 stop: 0 #fafafa, stop: 0.4 #f4f4f4,
+                                 stop: 0.5 #e7e7e7, stop: 1.0 #fafafa);
+ }
+
+QTabBar::tab:selected {
+     border-color: #9B9B9B;
+border-bottom-color: rgba(0, 0, 0, 0);
+ }
+
+ QTabBar::tab:!selected {
+     margin-top: 2px;
+ }
+
+ QTabBar::tab:selected {
+     margin-left: -4px;
+     margin-right: -4px;
+ }
+
+ QTabBar::tab:first:selected {
+     margin-left: 0;
+ }
+
+ QTabBar::tab:last:selected {
+     margin-right: 0;
+ }
+
+ QTabBar::tab:only-one {
+     margin: 0;
+ }
+
+#QuestPanel
+{ 
+border: 1px solid gray;
+border-radius: 15px;
+border-width: 2px;
+background-color: gainsboro;
+background-image: url(:/images/back.png);
+background-position: top right;
+background-repeat: no-repeat
+}
+
+QComboBox[editable=&quot;true&quot;]
+{
+border-image: url(:/images/frame.png) 4;
+border-width: 3;
+}
+
+QScrollBar:horizontal
+{
+	border: 1px solid grey;
+	background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, 	
+		stop: 0 #f6f7fa, stop: 1 #dadbde);
+	height: 15px;
+}
+
+QScrollBar:vertical
+{
+	border: 1px solid grey;
+	background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, 	
+		stop: 0 #f6f7fa, stop: 1 #dadbde);
+	width: 15px;
+}
+
+#questionArea
+{
+border-image: url(:/images/frame.png) 4;
+border-width: 3;
+}
+
+QListView
+{
+border-image: url(:/images/frame.png) 4;
+border-width: 3;
+}
+
+QLabel {
+border: none;
+border-image: none;
+padding: 0;
+background: none;
+}
+
+/* Make text in message boxes selectable. */
+QMessageBox {
+/* LinksAccessibleByMouse | TextSelectableByMouse */
+messagebox-text-interaction-flags: 5;
+}
+/* Set the selection colors for all widgets. */
+QWidget {
+selection-color: black;
+selection-background-color: Silver;
+color: black;
+}
+
+/* Make the entire row selected in item views. */
+QAbstractItemView {
+show-decoration-selected: 1;
+}
+
+/* Nice WindowsXP-style password character for password line edits. */
+QLineEdit[echoMode=&quot;2&quot;] {
+lineedit-password-character: 9679;
+}
+
+/* Customize tooltips. */
+QToolTip {
+background-color: rgb(200,200,255);
+border-color: darkslategray;
+border-width: 1px;
+border-style: solid;
+padding: 3px;
+font: bold;
+border-radius: 3px;
+opacity: 200;
+}
+
+/* Customize radio buttons. */
+
+QRadioButton {
+spacing: 5px;
+}
+
+QRadioButton::indicator {
+width: 13px;
+height: 13px;
+}
+
+QRadioButton::indicator::unchecked {
+image: url(:/images/radiobutton_unchecked.png);
+}
+
+QRadioButton::indicator:unchecked:hover {
+image: url(:/images/radiobutton_unchecked_hover.png);
+}
+
+QRadioButton::indicator:unchecked:pressed {
+image: url(:/images/radiobutton_unchecked_pressed.png);
+}
+
+QRadioButton::indicator::checked {
+image: url(:/images/radiobutton_checked.png);
+}
+
+QRadioButton::indicator:checked:hover {
+image: url(:/images/radiobutton_checked_hover.png);
+}
+
+QRadioButton::indicator:checked:pressed {
+image: url(:/images/radiobutton_checked_pressed.png);
+}
+
+/* Customize arrows. */
+
+*::down-arrow, *::menu-indicator {
+image: url(:/images/down_arrow.png);
+width: 7px;
+height: 7px;
+}
+
+*::down-arrow:disabled, *::down-arrow:off {
+image: url(:/images/down_arrow_disabled.png);
+}
+
+*::up-arrow {
+image: url(:/images/up_arrow.png);
+width: 7px;
+height: 7px;
+}
+
+*::up-arrow:disabled, *::up-arrow:off {
+image: url(:/images/up_arrow_disabled.png);
+}
+
+/* Customize push buttons and comboboxes. Our read-only combobox
+is very similar to a push button, so they share the same border image. */
+
+QPushButton {
+min-width: 50;
+}
+
+QPushButton, QComboBox[editable=&quot;false&quot;],
+QComboBox[editable=&quot;true&quot;]::drop-down {
+border-image: url(:/images/pushbutton.png) 5;
+border-width: 5;
+}
+
+QPushButton:hover, QComboBox[editable=&quot;false&quot;]:hover,
+QComboBox[editable=&quot;true&quot;]::drop-down:hover, QMenuBar::item:hover {
+border-image: url(:/images/pushbutton_hover.png) 5;
+border-width: 5;
+}
+
+QPushButton:pressed, QComboBox[editable=&quot;false&quot;]:on,
+QComboBox[editable=&quot;true&quot;]::drop-down:on, QMenuBar::item:on {
+border-image: url(:/images/pushbutton_pressed.png) 5;
+border-width: 5;
+}
+
+/* Customize read-only comboboxes. */
+
+QComboBox[editable=&quot;false&quot;] {
+padding-left: 3px;
+padding-right: 20px; /* space for the arrow */
+}
+
+QComboBox[editable=&quot;false&quot;]::drop-down {
+subcontrol-origin: padding;
+subcontrol-position: top right;
+width: 15px;
+border-left-style: solid;
+border-left-color: darkgray;
+border-left-width: 1px;
+}
+
+QComboBox[editable=&quot;false&quot;]::down-arrow 
+{
+	subcontrol-origin: content;
+	subcontrol-position: center;
+	position: relative;
+	left: 1px;
+}
+
+QComboBox[editable=&quot;false&quot;]::down-arrow:on 
+{
+	position: relative;
+	top: 1px;
+	left: 2px;
+}
+
+QComboBox[editable=&quot;true&quot;] 
+{
+	padding-right: 16px;
+}
+
+QComboBox[editable=&quot;true&quot;]::drop-down 
+{
+	subcontrol-origin: border;
+	subcontrol-position: top right;
+	width: 13px;
+	position: absolute;
+	top: 2px;
+	bottom: 2px;
+	right: 2px;
+}
+
+QComboBox[editable=&quot;true&quot;]::drop-down,
+QComboBox[editable=&quot;true&quot;]::drop-down:hover,
+QComboBox[editable=&quot;true&quot;]::drop-down:on 
+{
+	border-width: 0px; 
+	border-left-width: 3px; 
+	background-color: rgba(255, 255, 255, 200);
+}
+
+QComboBox[editable=&quot;true&quot;]::down-arrow:on 
+{
+	position: relative;
+	top: 1px;
+	left: 1px;
+}
+
+QCheckBox 
+{
+	spacing: 5px;
+}
+
+QCheckBox::indicator
+{
+	width: 13px;
+	height: 13px;
+}
+
+QCheckBox::indicator:unchecked 
+{
+	image: url(:/images/checkbox_unchecked.png);
+}
+
+QCheckBox::indicator:unchecked:hover 
+{
+	image: url(:/images/checkbox_unchecked_hover.png);
+}
+
+QCheckBox::indicator:unchecked:pressed 
+{
+	image: url(:/images/checkbox_unchecked_pressed.png);
+}
+
+QCheckBox::indicator:checked {
+image: url(:/images/checkbox_checked.png);
+}
+
+QCheckBox::indicator:checked:hover 
+{
+	image: url(:/images/checkbox_checked_hover.png);
+}
+
+QCheckBox::indicator:checked:pressed 
+{
+	image: url(:/images/checkbox_checked_pressed.png);
+}
+
+QSizeGrip 
+{
+	image: url(:/images/sizegrip.png);
+	width: 16px;
+	height: 16px;
+}
+
+QMenuBar 
+{
+	border-image: none;
+	border-style: none;
+	border-width: 1px;
+	border-bottom-style: solid;
+	border-bottom-color: darkslategray;
+	padding: 2px;
+}
+
+/* Customize spin boxes. */
+
+QSpinBox 
+{ 
+	padding-right: 15px;
+}
+
+QSpinBox::up-button 
+{
+	subcontrol-origin: border;
+	subcontrol-position: top right;
+
+	width: 16px;
+	border-image: url(:/images/spinup.png) 1;
+	border-width: 1px;
+}
+
+QSpinBox::up-button:hover 
+{
+	border-image: url(:/images/spinup_hover.png) 1;
+}
+
+QSpinBox::up-button:pressed {
+border-image: url(:/images/spinup_pressed.png) 1;
+}
+
+QSpinBox::down-button 
+{
+	subcontrol-origin: border;
+	subcontrol-position: bottom right;
+
+	width: 16px;
+	border-image: url(:/images/spindown.png) 1;
+	border-width: 1px;
+	border-top-width: 0;
+}
+
+QSpinBox::down-button:hover 
+{
+	border-image: url(:/images/spindown_hover.png) 1;
+}
+
+QSpinBox::down-button:pressed 
+{
+	border-image: url(:/images/spindown_pressed.png) 1;
+}
+</string>
+  </property>
+  <widget class="QPushButton" name="nextBtn">
+   <property name="geometry">
+    <rect>
+     <x>350</x>
+     <y>-30</y>
+     <width>75</width>
+     <height>25</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Далее</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="prevBtn">
+   <property name="geometry">
+    <rect>
+     <x>430</x>
+     <y>-30</y>
+     <width>75</width>
+     <height>25</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Назад</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="groupLabel">
+   <property name="geometry">
+    <rect>
+     <x>-50</x>
+     <y>130</y>
+     <width>46</width>
+     <height>13</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Группа</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="studentLabel">
+   <property name="geometry">
+    <rect>
+     <x>-50</x>
+     <y>180</y>
+     <width>46</width>
+     <height>13</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Студент</string>
+   </property>
+  </widget>
+  <widget class="QComboBox" name="groupsBox">
+   <property name="geometry">
+    <rect>
+     <x>-50</x>
+     <y>150</y>
+     <width>22</width>
+     <height>22</height>
+    </rect>
+   </property>
+   <property name="minimumSize">
+    <size>
+     <width>0</width>
+     <height>0</height>
+    </size>
+   </property>
+  </widget>
+  <widget class="QComboBox" name="studentsBox">
+   <property name="geometry">
+    <rect>
+     <x>-50</x>
+     <y>200</y>
+     <width>22</width>
+     <height>22</height>
+    </rect>
+   </property>
+   <property name="minimumSize">
+    <size>
+     <width>0</width>
+     <height>0</height>
+    </size>
+   </property>
+   <property name="editable">
+    <bool>true</bool>
+   </property>
+   <property name="frame">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="startButton">
+   <property name="geometry">
+    <rect>
+     <x>210</x>
+     <y>-50</y>
+     <width>60</width>
+     <height>25</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Начать</string>
+   </property>
+  </widget>
+  <widget class="QScrollArea" name="questionArea">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>-400</y>
+     <width>500</width>
+     <height>400</height>
+    </rect>
+   </property>
+   <property name="widgetResizable">
+    <bool>false</bool>
+   </property>
+   <widget class="QWidget" name="scrollAreaWidgetContents">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>0</y>
+      <width>494</width>
+      <height>394</height>
+     </rect>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QLCDNumber" name="lcdNumber">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>420</y>
+     <width>64</width>
+     <height>23</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="endBtn">
+   <property name="geometry">
+    <rect>
+     <x>270</x>
+     <y>-30</y>
+     <width>75</width>
+     <height>25</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Завершить</string>
+   </property>
+  </widget>
+  <widget class="QToolButton" name="infoButton">
+   <property name="geometry">
+    <rect>
+     <x>490</x>
+     <y>10</y>
+     <width>16</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="icon">
+    <iconset resource="../../res/res.qrc">
+     <normaloff>:/images/fileinfo-16.png</normaloff>:/images/fileinfo-16.png</iconset>
+   </property>
+   <property name="popupMode">
+    <enum>QToolButton::InstantPopup</enum>
+   </property>
+   <property name="autoRaise">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QTextBrowser" name="infoBrowser">
+   <property name="geometry">
+    <rect>
+     <x>435</x>
+     <y>20</y>
+     <width>51</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">
+border: 1px solid gray;
+border-radius: 15px;
+  border-width: 2px;
+  background-color: gainsboro;
+  background-image: url(:/images/back.png);
+  background-position: top right;
+  background-repeat: no-repeat</string>
+   </property>
+  </widget>
+ </widget>
+ <resources>
+  <include location="../../res/res.qrc"/>
+  <include location="../../res/res.qrc"/>
+ </resources>
+ <connections/>
+</ui>
