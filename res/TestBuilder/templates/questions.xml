@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="Windows-1251"?>
+<test>
+    <questions/>
+    <categories>
+        <topic name="(Без темы)"/>
+    </categories>
+    <resources/>
+    <scores type="0">
+        <level value="5" percent="85">Отлично</level>
+        <level value="4" percent="70">Хорошо</level>
+        <level value="3" percent="50">Удовлетворительно</level>
+        <level value="2" percent="0">Плохо</level>
+    </scores>
+    <settings counter="0">
+        <timer enabled="0">0</timer>
+        <navigation enabled="1" showtab="1" endbutton="0"/>
+    </settings>
+</test>

@@ -1,0 +1,1 @@
+select exists (select * from allstudents s where s.stud = :param);

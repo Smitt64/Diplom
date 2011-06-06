@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/">
+        <file>select_unsatisfactory_questions.sql</file>
+        <file alias="back">background.jpg</file>
+    </qresource>
+</RCC>

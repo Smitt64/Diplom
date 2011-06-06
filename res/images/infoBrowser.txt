@@ -1,0 +1,23 @@
+QScrollBar:horizontal
+{
+	border: 1px solid grey;
+	background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, 	
+		stop: 0 #f6f7fa, stop: 1 #dadbde);
+	height: 15px;
+}
+
+QScrollBar:vertical
+{
+	border: 1px solid grey;
+	background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, 	
+		stop: 0 #f6f7fa, stop: 1 #dadbde);
+	width: 15px;
+}
+
+  border: 1px solid gray;
+  border-radius: 15px;
+  border-width: 2px;
+  background-color: gainsboro;
+  background-image: url(:/images/back.png);
+  background-position: top right;
+  background-repeat: no-repeat

@@ -1,0 +1,1 @@
+select upper(subject), subject from subject where id = :param;

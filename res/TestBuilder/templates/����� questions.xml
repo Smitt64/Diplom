@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="Windows-1251"?>
+<test>
+    <questions>
+        <quest type="0" name="question.p0" rcount="0" src="source\question.p0.html">
+            <answer right="0" src="source\question.p1.html"/>
+            <answer right="1" src="source\question.p2.html"/>
+        </quest>
+    </questions>
+    <categories>
+        <topic name="(Без темы)">
+            <question>question.p0</question>
+        </topic>
+        <topic name="Test"/>
+    </categories>
+    <resources/>
+</test>

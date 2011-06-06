@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="Windows-1251"?>
+<editor>
+    <restrictions>
+        <cources>
+            <value>1 курс</value>
+            <value>2 курс</value>
+            <value>3 курс</value>
+            <value>4 курс</value>
+            <value>5 курс</value>
+        </cources>
+        <groups all="1">
+        </groups>
+    </restrictions>
+</editor>

@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/" lang="transaction">
+        <file alias="transaction">icon-transaction-guard-128.png</file>
+    </qresource>
+</RCC>

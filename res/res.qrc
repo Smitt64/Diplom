@@ -1,0 +1,43 @@
+<RCC>
+    <qresource prefix="/">
+        <file>images/checkbox_checked.png</file>
+        <file>images/checkbox_checked_hover.png</file>
+        <file>images/checkbox_checked_pressed.png</file>
+        <file>images/checkbox_unchecked.png</file>
+        <file>images/checkbox_unchecked_hover.png</file>
+        <file>images/checkbox_unchecked_pressed.png</file>
+        <file>images/down_arrow.png</file>
+        <file>images/down_arrow_disabled.png</file>
+        <file>images/frame.png</file>
+        <file>images/pagefold.png</file>
+        <file>images/pushbutton.png</file>
+        <file>images/pushbutton_hover.png</file>
+        <file>images/pushbutton_pressed.png</file>
+        <file>images/radiobutton_checked.png</file>
+        <file>images/radiobutton_checked_hover.png</file>
+        <file>images/radiobutton_checked_pressed.png</file>
+        <file>images/radiobutton_unchecked.png</file>
+        <file>images/radiobutton_unchecked_hover.png</file>
+        <file>images/radiobutton_unchecked_pressed.png</file>
+        <file>images/sizegrip.png</file>
+        <file>images/spindown.png</file>
+        <file>images/spindown_hover.png</file>
+        <file>images/spindown_off.png</file>
+        <file>images/spindown_pressed.png</file>
+        <file>images/spinup.png</file>
+        <file>images/spinup_hover.png</file>
+        <file>images/spinup_off.png</file>
+        <file>images/spinup_pressed.png</file>
+        <file>images/up_arrow.png</file>
+        <file>images/up_arrow_disabled.png</file>
+        <file>images/back.png</file>
+        <file>query/select_test_state.sql</file>
+        <file>images/Generic_Document.png</file>
+        <file>query/insert_test_state.sql</file>
+        <file>query/has_student.sql</file>
+        <file>images/fileinfo-16.png</file>
+        <file>images/infoBrowser.txt</file>
+        <file>query/select_subject.sql</file>
+        <file>TestBuilder/sample.ico</file>
+    </qresource>
+</RCC>
