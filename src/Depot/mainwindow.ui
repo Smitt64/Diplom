@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>800</width>
+    <height>600</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <widget class="QWidget" name="centralwidget"/>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>800</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="defaultUp">
+    <bool>false</bool>
+   </property>
+   <property name="nativeMenuBar">
+    <bool>false</bool>
+   </property>
+   <widget class="QMenu" name="menu">
+    <property name="title">
+     <string>Файл</string>
+    </property>
+    <addaction name="action"/>
+   </widget>
+   <widget class="QMenu" name="menu_2">
+    <property name="title">
+     <string>Вид</string>
+    </property>
+   </widget>
+   <addaction name="menu"/>
+   <addaction name="menu_2"/>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+  <action name="action">
+   <property name="text">
+    <string>Выход</string>
+   </property>
+  </action>
+  <action name="closeSubWindow">
+   <property name="text">
+    <string>Закрыть</string>
+   </property>
+  </action>
+  <action name="closeAllSubWin">
+   <property name="text">
+    <string>Закрыть все</string>
+   </property>
+  </action>
+  <action name="titleSubWindows">
+   <property name="text">
+    <string>Рядом</string>
+   </property>
+  </action>
+  <action name="cascadeSubWindows">
+   <property name="text">
+    <string>Каскадом</string>
+   </property>
+  </action>
+  <action name="nextWindow">
+   <property name="text">
+    <string>Следующее окно</string>
+   </property>
+  </action>
+  <action name="prevWindow">
+   <property name="text">
+    <string>Предыдущее окно</string>
+   </property>
+  </action>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
