@@ -1,0 +1,1 @@
+SELECT basegroups.caption, basegroups.cource FROM basegroups where basegroups.cource = :param;
