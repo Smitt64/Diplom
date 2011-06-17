@@ -63,13 +63,13 @@ void AnswerWidget::setupGeometry()
 {
     this->check->setGeometry(QRect(10, 0, 16, 16));
 
-    QSize sz(this->parentWidget()->geometry().width(),
+    QSize sz(this->parentWidget()->geometry().width() - 20,
              this->parentWidget()->geometry().height());
 
     this->textBrowser->setMaximumSize(sz);
     this->textBrowser->setMinimumSize(sz);
 
-    this->textBrowser->document()->adjustSize();
+    //this->textBrowser->document()->adjustSize();
     sz = this->textBrowser->document()->size().toSize() + QSize(8, 8);
     this->textBrowser->document()->setPageSize(QSizeF(sz));
 
