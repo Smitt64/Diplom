@@ -171,3 +171,8 @@ QString MainWindow::textFile(QString fname)
 
     return "";
 }
+
+void MainWindow::hideEvent(QHideEvent *event)
+{
+    qApp->quit();
+}

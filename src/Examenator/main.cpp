@@ -8,7 +8,6 @@
 #include <QGraphicsView>
 #include <QGraphicsProxyWidget>
 
-
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
@@ -25,8 +24,6 @@ int main(int argc, char *argv[])
 #ifndef DEBUG_MSG
     qDebug() << list;
 #endif
-
-
 
     QGraphicsScene scene;
     QGraphicsView *view = new QGraphicsView(&scene);
@@ -45,7 +42,6 @@ int main(int argc, char *argv[])
     view->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     view->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 
-    //view.setWindowFlags(Qt::WindowStaysOnTopHint);
     view->showFullScreen();
 
     return a.exec();

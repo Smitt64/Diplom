@@ -39,8 +39,12 @@ private slots:
     void onStartTest();
     void onOpen();
 
+protected:
+    virtual void hideEvent(QHideEvent *event);
+
 signals:
     void onOpenTest();
+    void onClose();
 
 private:
     QSqlDatabase db;
