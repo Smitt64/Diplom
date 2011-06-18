@@ -2134,12 +2134,14 @@ void QuestPanel::endTesting()
     //процент правильных ответов
     int percent = (int)(((float)scores / (float)maxScore) * 100);
 
-    int j = this->testScores.count() - 1;
-    while(this->testScores.at(j))
+    int j /*= this->testScores.count() - 1*/;
+    int count = this->testScores.count() - 1;
+    //for(j; j > 0; j--)
+    while(j < count)
     {
-        if(percent <= this->testScores[j]->percent)
+        if(percent >= this->testScores[j + 1]->percent)
             break;
-        j--;
+        j++;
     }
 
     //Генерировать отчет
@@ -2172,7 +2174,7 @@ void QuestPanel::endTesting()
             report = report.replace("${scores}", info);
         }
         report = report.replace("${percent}", QString("%1%, %2(%3)")
-                                .arg(scores)
+                                .arg(percent)
                                 .arg(this->testScores[j]->value)
                                 .arg(this->testScores[j]->text));
 
@@ -2197,13 +2199,15 @@ void QuestPanel::endTesting()
         {
             FileSystem::getInst()->fsOpen(&questFile);
             QString html = "<p>";
-            qDebug() << this->questList.count();
+
             for(int i = 0; i < this->questList.count(); i++)
             {
                 html += QString("<p><p><H3>Вопрос %1</H3></p>").arg(i + 1);
                 Question *quest = this->getQuestion(this->questList[i]);
                 QByteArray data = FileSystem::getInst()->fsGetFile(quest->getSrc(), &questFile);
                 html += data;
+                html += QString("<B>Ответ студента: </B>%1")
+                        .arg(quest->getRightAnswer());
             }
             FileSystem::getInst()->fsClose(&questFile);
             html += "</p>";
