@@ -40,6 +40,8 @@ AnswerWidget::AnswerWidget(FSHANDLE *handle, QString source, Type t, QWidget *pa
     this->textBrowser->viewport()->setAutoFillBackground(false);
 
     this->setVisible(true);
+
+    connect(this->check, SIGNAL(toggled(bool)), this, SLOT(onCheck(bool)));
 }
 
 AnswerWidget::~AnswerWidget()
@@ -115,23 +117,34 @@ void AnswerWidget::paintEvent(QPaintEvent */*event*/)
 
     style()->drawPrimitive(QStyle::PE_Widget, &opt, &painter, this);
 
-#ifdef REDACTOR
-    if(showRight && rightAnswer)
+//#ifdef REDACTOR
+    if(/*showRight && */rightAnswer)
+    //if()
     {
         painter.setPen(QPen(Qt::darkRed, 1, Qt::DotLine, Qt::RoundCap, Qt::RoundJoin));
         painter.drawRoundedRect(QRect(5, 0, this->width() - 25, this->height() - 5), 5, 5);
     }
-#endif
+//#endif
 }
 
-#ifdef REDACTOR
 void AnswerWidget::setRightAnswer(bool value)
 {
     rightAnswer = value;
 }
+
+void AnswerWidget::setAnswer(Answer *value)
+{
+    this->a = value;
+}
+
+void AnswerWidget::onCheck(bool value)
+{
+    a->setChecked(value);
+}
+
+#ifdef REDACTOR
 void AnswerWidget::setShowRight(bool state)
 {
     showRight = state;
 }
-
 #endif

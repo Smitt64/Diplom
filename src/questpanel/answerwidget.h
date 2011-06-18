@@ -5,6 +5,7 @@
 #include <../filesystem/filesystem.h>
 #include <../questpanel/textbrowser.h>
 #include <qabstractbutton.h>
+#include <../Questions.h>
 
 namespace Ui {
     class AnswerWidget;
@@ -22,13 +23,15 @@ public:
     AnswerWidget(FSHANDLE *handle, QString source, Type t, QWidget *parent = 0);
     ~AnswerWidget();
 
-#ifdef REDACTOR
     void setRightAnswer(bool state);
+#ifdef REDACTOR
     void setShowRight(bool state);
 #endif
 
     void setControlWidth(int iWidth);
     void setupGeometry();
+
+    void setAnswer(Answer *value);
 
     QAbstractButton *checkWidget();
 
@@ -44,10 +47,15 @@ protected:
     int cWidth;
     QAbstractButton *check;
 
+private slots:
+    void onCheck(bool value);
+
 private:
     Ui::AnswerWidget *ui;
-#ifdef REDACTOR
+
+    Answer *a;
     bool rightAnswer;
+#ifdef REDACTOR
     bool showRight;
 #endif
 };

@@ -93,7 +93,6 @@ void QuestionWidgt::calculateSize()
         }
 
         yPos = this->questBrowser->height() + 5;
-        qDebug() << "yPos = this->questBrowser->height() + 5 " << yPos;
 
         if(type == "0")
         {
@@ -103,8 +102,6 @@ void QuestionWidgt::calculateSize()
                 answers[i]->setupGeometry();
 
                 yPos += answers[i]->height() + 10;
-
-                qDebug() << "yPos: " << yPos;
             }
             //Подгон размера поля
             this->adjustSize();
@@ -184,11 +181,14 @@ void QuestionWidgt::setQuestion(Question *quest)
             AnswerWidget *ans = new AnswerWidget(&TO_QUEST_PANEL(this->panel)->questFile,
                                                 this->question->getAnswer(i)->getSource(),
                                                 type, this);
+            ans->setAnswer(this->question->getAnswer(i));
+            ans->setRightAnswer(this->question->getAnswer(i)->isRight());
+
 #ifdef REDACTOR
             if(this->showRight)
             {
                 ans->setShowRight(this->showRight);
-                ans->setRightAnswer(this->question->getAnswer(i)->isRight());
+
             }
 #endif
             ans->setGeometry(QRect(0, yPos, this->parentWidget()->geometry().width(), 10));
@@ -280,7 +280,6 @@ void QuestionWidgt::writeAnswers()
         {
             if(this->answers[i]->isChecked())
                 answ += QString::number(i) + ";";
-            this->question->getAnswer(i)->setChecked(this->answers[i]->isChecked());
         }
         this->question->setTextAnswer(answ);
     }
