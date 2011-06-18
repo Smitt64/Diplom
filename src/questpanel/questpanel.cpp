@@ -778,6 +778,10 @@ QuestPanel::OpenErr QuestPanel::updateTopics()
             return FAIL;
         }
     }
+    else
+    {
+        QMessageBox::critical(this, "Ошибка!", "Не удалось загрузить конфигурацию теста!");
+    }
 
 #ifdef REDACTOR
     if(this->questions.count() > 0)
@@ -1208,213 +1212,216 @@ void QuestPanel::hideStartScreen()
     qDebug() << "Hide start screen";
 #endif
 
-#ifdef REDACTOR
-    this->nextQuestion = this->questions[this->getQuestNames()[0]]->getName();
-#else
-    if(this->questList.count() > 0)
-        this->nextQuestion = this->questions[this->questList[0]]->getName();
-    else
+    if(this->questions.count() > 0)
     {
-        QMessageBox::warning(this, "Ошибка!", "Список вопросов пуст. \nПроверьте параметры запуска!");
-        return;
-    }
+#ifdef REDACTOR
+        this->nextQuestion = this->questions[this->getQuestNames()[0]]->getName();
+#else
+        if(this->questList.count() > 0)
+            this->nextQuestion = this->questions[this->questList[0]]->getName();
+        else
+        {
+            QMessageBox::warning(this, "Ошибка!", "Список вопросов пуст. \nПроверьте параметры запуска!");
+            return;
+        }
 #endif
 
 #ifndef REDACTOR
-    QSqlQuery query;
+        QSqlQuery query;
 
-    group = this->ui->groupsBox->currentText();
-    //Существует ли такой студент
-    student_name = this->ui->studentsBox->lineEdit()->text();
+        group = this->ui->groupsBox->currentText();
+        //Существует ли такой студент
+        student_name = this->ui->studentsBox->lineEdit()->text();
 
-    query.prepare(QuestPanel::getFile(":/query/has_student.sql"));
-    query.bindValue(":param", student_name);
-
-    if(query.exec())
-    {
-        query.next();
-        if(query.record().value(0).toInt() == 0)
-        {
-            QMessageBox msg(this);
-            msg.setWindowTitle("Ошибка!");
-            msg.setText("Студента '<B>" + student_name + "</B>' нет среди учащихся!");
-            msg.setInformativeText("Проверьте правильность введенного имени...");
-            msg.setStandardButtons(QMessageBox::Ok);
-            msg.exec();
-            return;
-        }
-    }
-    else
-    {
-        QMessageBox msg(this);
-        msg.setWindowTitle("Ошибка!");
-        msg.setText("Не удалось проверить наличие студента <B>" + student_name + "</B> среди учащихся!");
-        msg.setDetailedText(query.lastError().text());
-        msg.setStandardButtons(QMessageBox::Ok);
-        msg.exec();
-
-        return;
-    }
-
-    this->student = this->ui->studentsBox->itemData(this->ui->studentsBox->currentIndex(), Qt::UserRole).toInt();
-
-    if(this->startLimiting)
-    {
-        query.prepare(QuestPanel::getFile(":/query/select_test_state.sql"));
-        query.bindValue(":s_param", this->student);
-        query.bindValue(":test", this->testIdenti);
+        query.prepare(QuestPanel::getFile(":/query/has_student.sql"));
+        query.bindValue(":param", student_name);
 
         if(query.exec())
         {
-            int count = 0;
-            if(query.size())
+            query.next();
+            if(query.record().value(0).toInt() == 0)
             {
-                query.last();
-                count = query.record().value(0).toInt();
-            }
-            else
-            {
-#ifndef DEBUG_MSG
-                qDebug() << "Can't get query size";
-#endif
-            }
-
-            //Если не исчерпаны попытки пройти тест и записать/обновить сведения
-            if(count < this->maxStarts)
-            {
-                if(!this->passwordOnStart.isEmpty())
-                {
-                    bool ok;
-                    QString pass = QInputDialog::getText(this, "Введите пароль...",
-                                                         "Подтверждение преподавателя:", QLineEdit::Password,
-                                                         "", &ok);
-                    if(!ok || pass.isEmpty() || this->passwordOnStart != pass)
-                        return;
-                }
-
-                query.prepare("call UpdateTestState(?, ?, ?);");
-
-                query.bindValue(0, student);
-                query.bindValue(1, this->testIdenti);
-                query.bindValue(2, this->startPeriod);
-
-                if(!query.exec())
-                {
-                    QMessageBox msg(this);
-                    msg.setWindowTitle("Ошибка!");
-                    msg.setText("Не удалось обновить состояние! Обратитесь к преподавателю!");
-                    msg.setInformativeText("Проверьте настройки сервера.");
-                    msg.setDetailedText(query.lastError().text());
-                    msg.setStandardButtons(QMessageBox::Ok);
-                    msg.exec();
-                    return;
-                }
-            }
-            else
-            {
-                QMessageBox::information(this, "Ошибка!",
-                                         "Вам больше нельзя проходить этот тест!");
+                QMessageBox msg(this);
+                msg.setWindowTitle("Ошибка!");
+                msg.setText("Студента '<B>" + student_name + "</B>' нет среди учащихся!");
+                msg.setInformativeText("Проверьте правильность введенного имени...");
+                msg.setStandardButtons(QMessageBox::Ok);
+                msg.exec();
                 return;
             }
         }
         else
         {
-            QMessageBox::information(this, "qОшибка!",
-                                     query.lastError().text());
+            QMessageBox msg(this);
+            msg.setWindowTitle("Ошибка!");
+            msg.setText("Не удалось проверить наличие студента <B>" + student_name + "</B> среди учащихся!");
+            msg.setDetailedText(query.lastError().text());
+            msg.setStandardButtons(QMessageBox::Ok);
+            msg.exec();
+
             return;
         }
-    }
-    else
-    {
-        if(!this->passwordOnStart.isEmpty())
+
+        this->student = this->ui->studentsBox->itemData(this->ui->studentsBox->currentIndex(), Qt::UserRole).toInt();
+
+        if(this->startLimiting)
         {
-            bool ok;
-            QString pass = QInputDialog::getText(this, "Введите пароль...",
-                                                 "Подтверждение преподавателя:", QLineEdit::Password,
-                                                 "", &ok);
+            query.prepare(QuestPanel::getFile(":/query/select_test_state.sql"));
+            query.bindValue(":s_param", this->student);
+            query.bindValue(":test", this->testIdenti);
 
-            if(!ok || pass.isEmpty() || this->passwordOnStart != pass)
+            if(query.exec())
+            {
+                int count = 0;
+                if(query.size())
+                {
+                    query.last();
+                    count = query.record().value(0).toInt();
+                }
+                else
+                {
+#ifndef DEBUG_MSG
+                    qDebug() << "Can't get query size";
+#endif
+                }
+
+                //Если не исчерпаны попытки пройти тест и записать/обновить сведения
+                if(count < this->maxStarts)
+                {
+                    if(!this->passwordOnStart.isEmpty())
+                    {
+                        bool ok;
+                        QString pass = QInputDialog::getText(this, "Введите пароль...",
+                                                             "Подтверждение преподавателя:", QLineEdit::Password,
+                                                             "", &ok);
+                        if(!ok || pass.isEmpty() || this->passwordOnStart != pass)
+                            return;
+                    }
+
+                    query.prepare("call UpdateTestState(?, ?, ?);");
+
+                    query.bindValue(0, student);
+                    query.bindValue(1, this->testIdenti);
+                    query.bindValue(2, this->startPeriod);
+
+                    if(!query.exec())
+                    {
+                        QMessageBox msg(this);
+                        msg.setWindowTitle("Ошибка!");
+                        msg.setText("Не удалось обновить состояние! Обратитесь к преподавателю!");
+                        msg.setInformativeText("Проверьте настройки сервера.");
+                        msg.setDetailedText(query.lastError().text());
+                        msg.setStandardButtons(QMessageBox::Ok);
+                        msg.exec();
+                        return;
+                    }
+                }
+                else
+                {
+                    QMessageBox::information(this, "Ошибка!",
+                                             "Вам больше нельзя проходить этот тест!");
+                    return;
+                }
+            }
+            else
+            {
+                QMessageBox::information(this, "qОшибка!",
+                                         query.lastError().text());
                 return;
+            }
         }
-    }
+        else
+        {
+            if(!this->passwordOnStart.isEmpty())
+            {
+                bool ok;
+                QString pass = QInputDialog::getText(this, "Введите пароль...",
+                                                     "Подтверждение преподавателя:", QLineEdit::Password,
+                                                     "", &ok);
 
-    if(this->unsatisfactory)
-        this->addUnsatisfactoryQuestions();
+                if(!ok || pass.isEmpty() || this->passwordOnStart != pass)
+                    return;
+            }
+        }
 
-    emit startTestButton();
+        if(this->unsatisfactory)
+            this->addUnsatisfactoryQuestions();
+
+        emit startTestButton();
 #endif
 
-    QRect comboRect = this->ui->studentsBox->geometry();
-    QRect grLebel = this->ui->groupLabel->geometry();
-    QRect stLebel = this->ui->studentLabel->geometry();
-    QRect grCombo = this->ui->groupsBox->geometry();
-    QRect stCombo = this->ui->studentsBox->geometry();
-    QRect startBtn = this->ui->startButton->geometry();
+        QRect comboRect = this->ui->studentsBox->geometry();
+        QRect grLebel = this->ui->groupLabel->geometry();
+        QRect stLebel = this->ui->studentLabel->geometry();
+        QRect grCombo = this->ui->groupsBox->geometry();
+        QRect stCombo = this->ui->studentsBox->geometry();
+        QRect startBtn = this->ui->startButton->geometry();
 
-    QPropertyAnimation *label1 = new QPropertyAnimation(this->ui->groupLabel, "pos");
-    QPropertyAnimation *label2 = new QPropertyAnimation(this->ui->studentLabel, "pos");
+        QPropertyAnimation *label1 = new QPropertyAnimation(this->ui->groupLabel, "pos");
+        QPropertyAnimation *label2 = new QPropertyAnimation(this->ui->studentLabel, "pos");
 
-    QPropertyAnimation *combo1 = new QPropertyAnimation(this->ui->groupsBox, "pos");
-    QPropertyAnimation *combo2 = new QPropertyAnimation(this->ui->studentsBox, "pos");
+        QPropertyAnimation *combo1 = new QPropertyAnimation(this->ui->groupsBox, "pos");
+        QPropertyAnimation *combo2 = new QPropertyAnimation(this->ui->studentsBox, "pos");
 
-    QPropertyAnimation *button = new QPropertyAnimation(this->ui->startButton, "pos");
+        QPropertyAnimation *button = new QPropertyAnimation(this->ui->startButton, "pos");
 
-    label1->setStartValue(QPoint(grLebel.left(), grLebel.top()));
-    grLebel.setLeft(-comboRect.width());
-    label1->setEndValue(QPoint(grLebel.left(), grLebel.top()));
+        label1->setStartValue(QPoint(grLebel.left(), grLebel.top()));
+        grLebel.setLeft(-comboRect.width());
+        label1->setEndValue(QPoint(grLebel.left(), grLebel.top()));
 
-    label2->setStartValue(QPoint(stLebel.left(), stLebel.top()));
-    stLebel.setLeft(-comboRect.width());
-    label2->setEndValue(QPoint(stLebel.left(), stLebel.top()));
+        label2->setStartValue(QPoint(stLebel.left(), stLebel.top()));
+        stLebel.setLeft(-comboRect.width());
+        label2->setEndValue(QPoint(stLebel.left(), stLebel.top()));
 
-    combo1->setStartValue(QPoint(grCombo.left(), grCombo.top()));
-    grCombo.setLeft(-comboRect.width());
-    combo1->setEndValue(QPoint(grCombo.left(), grCombo.top()));
+        combo1->setStartValue(QPoint(grCombo.left(), grCombo.top()));
+        grCombo.setLeft(-comboRect.width());
+        combo1->setEndValue(QPoint(grCombo.left(), grCombo.top()));
 
-    combo2->setStartValue(QPoint(stCombo.left(), stCombo.top()));
-    stCombo.setLeft(-comboRect.width());
-    combo2->setEndValue(QPoint(stCombo.left(), stCombo.top()));
+        combo2->setStartValue(QPoint(stCombo.left(), stCombo.top()));
+        stCombo.setLeft(-comboRect.width());
+        combo2->setEndValue(QPoint(stCombo.left(), stCombo.top()));
 
-    button->setStartValue(QPoint(startBtn.left(), startBtn.top()));
-    startBtn.setLeft(-comboRect.width());
-    button->setEndValue(QPoint(startBtn.left(), startBtn.top()));
+        button->setStartValue(QPoint(startBtn.left(), startBtn.top()));
+        startBtn.setLeft(-comboRect.width());
+        button->setEndValue(QPoint(startBtn.left(), startBtn.top()));
 
-    QParallelAnimationGroup *group = new QParallelAnimationGroup;
-    group->addAnimation(label1);
-    group->addAnimation(label2);
-    group->addAnimation(combo1);
-    group->addAnimation(combo2);
-    group->addAnimation(button);
+        QParallelAnimationGroup *group = new QParallelAnimationGroup;
+        group->addAnimation(label1);
+        group->addAnimation(label2);
+        group->addAnimation(combo1);
+        group->addAnimation(combo2);
+        group->addAnimation(button);
 
-    this->ui->infoButton->setVisible(false);
-    connect(group, SIGNAL(finished()), this, SLOT(onEndQuestAnimation()));
+        this->ui->infoButton->setVisible(false);
+        connect(group, SIGNAL(finished()), this, SLOT(onEndQuestAnimation()));
 
-    group->start();
+        group->start();
 
-    this->ui->nextBtn->setVisible(true);
-    this->ui->prevBtn->setVisible(true);
+        this->ui->nextBtn->setVisible(true);
+        this->ui->prevBtn->setVisible(true);
 
 #ifndef REDACTOR
-    if(this->onTime)
-    {
+        if(this->onTime)
+        {
 #endif
-        QTimer::singleShot(this->time * 60000, this, SLOT(onTimer()));
-        updateIndicator = new QTimer;
-        updateIndicator->setInterval(1000);
+            QTimer::singleShot(this->time * 60000, this, SLOT(onTimer()));
+            updateIndicator = new QTimer;
+            updateIndicator->setInterval(1000);
 
-        connect(updateIndicator, SIGNAL(timeout()), this, SLOT(onUpdateIndicator()));
-        updateIndicator->start();
+            connect(updateIndicator, SIGNAL(timeout()), this, SLOT(onUpdateIndicator()));
+            updateIndicator->start();
 
-        this->ui->lcdNumber->setVisible(true);
-        this->questTime --;
-        this->ui->lcdNumber->display(QString::number(this->questTime) + ":00");
+            this->ui->lcdNumber->setVisible(true);
+            this->questTime --;
+            this->ui->lcdNumber->display(QString::number(this->questTime) + ":00");
 #ifndef REDACTOR
-    }
+        }
 #endif
 
 #ifndef DEBUG_MSG
-    qDebug() << "StartScreen is hide.";
+        qDebug() << "StartScreen is hide.";
 #endif
+    }
 }
 
 #ifdef REDACTOR
@@ -2112,8 +2119,20 @@ void QuestPanel::endTesting()
     for(int i = 0; i < this->questions.count(); i++)
         scores += this->getQuestion(i)->getUserScore();
 
+    //Максимальное количество баллов
+    int maxScore = 0;
+    for(int i = 0; i < questCount; i++)
+    {
+        Question *quest = this->getQuestion(i);
+        if(quest->getType() == "0")
+            maxScore += quest->getAnsvRCount();
+        else if(quest->getType() == "1")
+            maxScore++;
+        else
+            maxScore += this->getPlugin(quest->getType())->maxUserScore();
+    }
     //процент правильных ответов
-    int percent = (int)((scores / questCount) * 100);
+    int percent = (int)(((float)scores / (float)maxScore) * 100);
 
     int j = this->testScores.count() - 1;
     while(this->testScores.at(j))
@@ -2152,7 +2171,10 @@ void QuestPanel::endTesting()
             }
             report = report.replace("${scores}", info);
         }
-        report = report.replace("${percent}", QString("%1%").arg(scores));
+        report = report.replace("${percent}", QString("%1%, %2(%3)")
+                                .arg(scores)
+                                .arg(this->testScores[j]->value)
+                                .arg(this->testScores[j]->text));
 
         report = report.replace("${student}", student_name);
         report = report.replace("${group}", group);
