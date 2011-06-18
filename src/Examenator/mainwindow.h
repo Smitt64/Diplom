@@ -11,6 +11,7 @@
 #include <qdebug.h>
 #include <qmessagebox.h>
 #include <qmap.h>
+#include <QGraphicsProxyWidget>
 #include "../questpanel/questpanel.h"
 
 namespace Ui {
@@ -32,6 +33,7 @@ public:
     QString getCmdParam(QString name);
     void onConnectionSettings();
     void setViewWidget(QWidget *widget);
+    void setProxyWidget(QGraphicsProxyWidget *value);
 
     static QString textFile(QString fname);
 private slots:
@@ -39,7 +41,7 @@ private slots:
     void onOpen();
 
 protected:
-    virtual void hideEvent(QHideEvent *event);
+    virtual void closeEvent(QCloseEvent *event);
 
 signals:
     void onOpenTest();
@@ -51,6 +53,7 @@ private:
     QMap<QString, QString> cmd;
     Ui::MainWindow *ui;
     QWidget *pr;
+    QGraphicsProxyWidget *proxy;
 };
 
 #endif // MAINWINDOW_H

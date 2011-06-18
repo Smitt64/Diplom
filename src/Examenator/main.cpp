@@ -21,10 +21,6 @@ int main(int argc, char *argv[])
     //Параметры запуска
     QStringList list = a.arguments();
 
-#ifndef DEBUG_MSG
-    qDebug() << list;
-#endif
-
     QGraphicsScene scene;
     QGraphicsView *view = new QGraphicsView(&scene);
     QWidget *desc = qApp->desktop();
@@ -35,8 +31,8 @@ int main(int argc, char *argv[])
     w->setViewWidget(view);
     w->setProperty("pos", QPoint((desc->width() - w->width()) / 2, (desc->height() - w->height()) / 2));
 
-    QGraphicsProxyWidget *window = scene.addWidget(w, Qt::Dialog);
-            //new QGraphicsProxyWidget(NULL, Qt::Window);
+    QGraphicsProxyWidget *window = scene.addWidget(w, Qt::Window);
+    w->setProxyWidget(window);
     window->setWidget(w);
     scene.addItem(window);
 

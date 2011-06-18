@@ -39,7 +39,7 @@ MainWindow::MainWindow(QStringList arguments, QWidget *parent) :
         if(this->hasCmdParam("-mixQ"))
             mixQ = (bool)this->getCmdParam("-mixq").toInt();
         if(this->hasCmdParam("-mixA"))
-            mixA = (bool)this->getCmdParam("-mixq").toInt();
+            mixA = (bool)this->getCmdParam("-mixa").toInt();
 
         int rnd = 0;
         if(this->hasCmdParam("-rnd"))
@@ -86,6 +86,7 @@ void MainWindow::onOpen()
         this->pr->showFullScreen();
         connect(this->panel, SIGNAL(startTestButton()), this, SLOT(onStartTest()));
     }
+    //this->setWindowFlags(Qt::WindowTitleHint | Qt::CustomizeWindowHint);| Qt::WindowTitleHint | Qt::CustomizeWindowHint
 }
 
 void MainWindow::setViewWidget(QWidget *widget)
@@ -153,8 +154,8 @@ void MainWindow::connectToDataBase()
 
 void MainWindow::onStartTest()
 {
-    this->setWindowFlags(Qt::Window | Qt::WindowTitleHint |
-                         Qt::WindowStaysOnTopHint | Qt::CustomizeWindowHint);
+    this->proxy->setWindowFlags(Qt::Window | Qt::WindowTitleHint | Qt::CustomizeWindowHint);
+    this->proxy->update();
     this->show();
 }
 
@@ -172,7 +173,12 @@ QString MainWindow::textFile(QString fname)
     return "";
 }
 
-void MainWindow::hideEvent(QHideEvent *event)
+void MainWindow::closeEvent(QCloseEvent *event)
 {
-    //qApp->quit();
+    qApp->quit();
+}
+
+void MainWindow::setProxyWidget(QGraphicsProxyWidget *value)
+{
+    this->proxy = value;
 }
