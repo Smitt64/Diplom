@@ -3,6 +3,11 @@
 # -------------------------------------------------
 QT += sql \
     xml
+
+OBJECTS_DIR = .build
+MOC_DIR = .build
+UI_DIR = .build
+
 TARGET = Examenator
 TEMPLATE = app
 SOURCES += main.cpp \

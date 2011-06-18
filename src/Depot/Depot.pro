@@ -3,6 +3,11 @@
 # -------------------------------------------------
 QT += sql \
     xml
+
+OBJECTS_DIR = .build
+MOC_DIR = .build
+UI_DIR = .build
+
 TEMPLATE = app
 TARGET = Depot
 DEPLOYMENT_PLUGIN += qjpeg \

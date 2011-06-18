@@ -1,5 +1,10 @@
 QT += sql \
     xml
+
+OBJECTS_DIR = .build
+MOC_DIR = .build
+UI_DIR = .build
+
 TEMPLATE = lib
 CONFIG += plugin
 
@@ -8,7 +13,7 @@ TARGET = $$qtLibraryTarget(Reports)
 INCLUDEPATH += $$quote(../../../include/)
 
 debug:LIBS += $$quote(../../../libs/libncreportd.a)
-release:LIBS += $$quote(../../../libs/libncreportd.a)
+release:LIBS += $$quote(../../../libs/libncreport.a)
 
 linux-g++ {
     release: DESTDIR = ../../../bin/release/unix/plugins/depot
