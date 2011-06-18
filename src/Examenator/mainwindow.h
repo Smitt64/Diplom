@@ -11,8 +11,7 @@
 #include <qdebug.h>
 #include <qmessagebox.h>
 #include <qmap.h>
-
-#include <../questpanel/questpanel.h>
+#include "../questpanel/questpanel.h"
 
 namespace Ui {
     class MainWindow;
