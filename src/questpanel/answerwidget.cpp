@@ -117,14 +117,13 @@ void AnswerWidget::paintEvent(QPaintEvent */*event*/)
 
     style()->drawPrimitive(QStyle::PE_Widget, &opt, &painter, this);
 
-//#ifdef REDACTOR
-    if(/*showRight && */rightAnswer)
-    //if()
+#ifdef REDACTOR
+    if(showRight && rightAnswer)
     {
         painter.setPen(QPen(Qt::darkRed, 1, Qt::DotLine, Qt::RoundCap, Qt::RoundJoin));
         painter.drawRoundedRect(QRect(5, 0, this->width() - 25, this->height() - 5), 5, 5);
     }
-//#endif
+#endif
 }
 
 void AnswerWidget::setRightAnswer(bool value)
