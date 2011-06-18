@@ -4,12 +4,12 @@
 #include <qtoolbutton.h>
 #include <QPropertyAnimation>
 #include <qtreewidget.h>
-#include <texteditor.h>
+#include "texteditor.h"
 #include <qgraphicsview.h>
-#include <questeditor.h>
+#include "questeditor.h"
 #include <qmessagebox.h>
 #include <qinputdialog.h>
-#include <groupeditor.h>
+#include "groupeditor.h"
 #include <qtooltip.h>
 #include <qprinter.h>
 #include <qprintdialog.h>
