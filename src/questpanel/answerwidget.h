@@ -2,10 +2,10 @@
 #define ANSWERWIDGET_H
 
 #include <QWidget>
-#include <../filesystem/filesystem.h>
-#include <../questpanel/textbrowser.h>
+#include "../filesystem/filesystem.h"
+#include "../questpanel/textbrowser.h"
 #include <qabstractbutton.h>
-#include <../Questions.h>
+#include "../Questions.h"
 
 namespace Ui {
     class AnswerWidget;

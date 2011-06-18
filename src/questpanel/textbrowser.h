@@ -2,7 +2,7 @@
 #define TEXTBROWSER_H
 
 #include <QTextBrowser>
-#include <../filesystem/filesystem.h>
+#include "../filesystem/filesystem.h"
 
 class TextBrowser : public QTextBrowser
 {

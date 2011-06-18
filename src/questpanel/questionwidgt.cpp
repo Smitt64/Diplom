@@ -3,8 +3,8 @@
 #include "qdebug.h"
 #include "qcompleter.h"
 #include <qlineedit.h>
-#include <../filesystem/filesystem.h>
-#include <../questpanel/questpanel.h>
+#include "../filesystem/filesystem.h"
+#include "../questpanel/questpanel.h"
 
 #define TO_QUEST_PANEL(widget)((QuestPanel*)(widget))
 

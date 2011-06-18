@@ -10,11 +10,11 @@
 #include <qcompleter.h>
 #include <qsequentialanimationgroup.h>
 #include <qsqlrecord.h>
-#include <../filesystem/filesystem.h>
-#include <../Questions.h>
-#include <../questpanel/answerwidget.h>
-#include <../questpanel/questionwidgt.h>
-#include <../questpanel/textbrowser.h>
+#include "../filesystem/filesystem.h"
+#include "../Questions.h"
+#include "../questpanel/answerwidget.h"
+#include "../questpanel/questionwidgt.h"
+#include "../questpanel/textbrowser.h"
 #include "../testbuilderplugininterface.h"
 #include "../questeditorinterface.h"
 #include "../showpanelinterface.h"

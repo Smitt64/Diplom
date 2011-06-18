@@ -1,6 +1,6 @@
-#include "questpanel.h"
 #include "ui_questpanel.h"
-#include <mainwindow.h>
+#include "questpanel.h"
+//#include "mainwindow.h"
 #include <QPropertyAnimation>
 #include <QSequentialAnimationGroup>
 #include <QParallelAnimationGroup>

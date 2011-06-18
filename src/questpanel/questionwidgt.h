@@ -4,9 +4,9 @@
 #include <QWidget>
 #include <qlist.h>
 #include <qbuttongroup.h>
-#include <../questpanel/textbrowser.h>
-#include <../Questions.h>
-#include <../questpanel/answerwidget.h>
+#include "../questpanel/textbrowser.h"
+#include "../Questions.h"
+#include "../questpanel/answerwidget.h"
 #include "../showpanelinterface.h"
 
 namespace Ui {
