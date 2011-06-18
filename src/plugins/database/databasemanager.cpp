@@ -2,9 +2,9 @@
 #include "databasemanager.h"
 #include <QWidget>
 #include <QPushButton>
-#include <speciality.h>
+#include "speciality.h"
 #include <QSqlQuery>
-#include <students.h>
+#include "students.h"
 #include <QMessageBox>
 
 QWidget *DataBaseManager::central(QString window, QWidget *parent)

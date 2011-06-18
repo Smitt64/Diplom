@@ -6,7 +6,7 @@
 #include <QDebug>
 #include <QFile>
 #include <QMessageBox>
-#include <speciality.h>
+#include "speciality.h"
 #include <QStatusBar>
 #include "ui_students.h"
 

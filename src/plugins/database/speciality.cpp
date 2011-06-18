@@ -7,9 +7,9 @@
 #include <QDebug>
 #include <QFile>
 #include <QMessageBox>
-#include <addspeciality.h>
+#include "addspeciality.h"
 #include <QTableWidgetItem>
-#include <addgroup.h>
+#include "addgroup.h"
 #include <qsqlrecord.h>
 
 Speciality::Speciality(QWidget *parent) :
