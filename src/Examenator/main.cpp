@@ -27,12 +27,16 @@ int main(int argc, char *argv[])
 
     QGraphicsScene scene;
     QGraphicsView *view = new QGraphicsView(&scene);
+    QWidget *desc = qApp->desktop();
     scene.setStickyFocus(true);
+    scene.setSceneRect(desc->geometry());
 
     MainWindow *w = new MainWindow(list);
     w->setViewWidget(view);
+    w->setProperty("pos", QPoint((desc->width() - w->width()) / 2, (desc->height() - w->height()) / 2));
 
-    QGraphicsProxyWidget *window = new QGraphicsProxyWidget(NULL, Qt::Window);
+    QGraphicsProxyWidget *window = scene.addWidget(w, Qt::Dialog);
+            //new QGraphicsProxyWidget(NULL, Qt::Window);
     window->setWidget(w);
     scene.addItem(window);
 
