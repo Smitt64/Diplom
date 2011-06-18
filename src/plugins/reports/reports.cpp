@@ -10,8 +10,8 @@
 #include <QSqlRecord>
 #include <QSqlField>
 #include <QWizard>
-#include <wizardsubject.h>
-#include <selecttest.h>
+#include "wizardsubject.h"
+#include "selecttest.h"
 
 QWidget *Reports::central(QString window, QWidget *parent)
 {
