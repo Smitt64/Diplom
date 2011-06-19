@@ -12,6 +12,8 @@
 #include <qmessagebox.h>
 #include <qmap.h>
 #include <QGraphicsProxyWidget>
+#include <QGraphicsBlurEffect>
+#include <QPropertyAnimation>
 #include "../questpanel/questpanel.h"
 
 namespace Ui {
@@ -54,6 +56,7 @@ private:
     Ui::MainWindow *ui;
     QWidget *pr;
     QGraphicsProxyWidget *proxy;
+    QGraphicsBlurEffect blur;
 };
 
 #endif // MAINWINDOW_H

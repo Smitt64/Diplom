@@ -36,8 +36,8 @@ int main(int argc, char *argv[])
     window->setWidget(w);
     scene.addItem(window);
 
-    view->setRenderHints(view->renderHints() | QPainter::Antialiasing | QPainter::SmoothPixmapTransform);
-    view->setViewportUpdateMode(QGraphicsView::BoundingRectViewportUpdate);
+    view->setRenderHints(view->renderHints()/* | QPainter::Antialiasing | QPainter::SmoothPixmapTransform*/);
+    view->setViewportUpdateMode(QGraphicsView::SmartViewportUpdate);
     view->setBackgroundBrush(QPixmap(":/back"));
     view->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     view->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);

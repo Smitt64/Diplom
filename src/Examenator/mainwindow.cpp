@@ -10,6 +10,7 @@ MainWindow::MainWindow(QStringList arguments, QWidget *parent) :
     panel(NULL)
 {
     ui->setupUi(this);
+    this->blur.setBlurRadius(0);
 
     for(int i = 1; i < arguments.count(); i++)
     {
@@ -68,10 +69,12 @@ MainWindow::~MainWindow()
 
 void MainWindow::onOpen()
 {
+    this->blur.setBlurRadius(5);
     QString fName = QFileDialog::getOpenFileName(this, "Открыть тест...");
 
     if(!fName.isEmpty())
     {
+        this->blur.setBlurRadius(0);
         this->connectToDataBase();
         this->panel = new QuestPanel(fName, this);
         this->panel->updateTopics();
@@ -81,12 +84,12 @@ void MainWindow::onOpen()
 
         this->panel->setGeometry(this->geometry());
 
+        this->proxy->setWindowTitle(this->panel->getWindowCaption());
         this->panel->showStartScreen();
         this->pr->setWindowFlags(this->pr->windowFlags() | Qt::WindowStaysOnTopHint);
         this->pr->showFullScreen();
         connect(this->panel, SIGNAL(startTestButton()), this, SLOT(onStartTest()));
     }
-    //this->setWindowFlags(Qt::WindowTitleHint | Qt::CustomizeWindowHint);| Qt::WindowTitleHint | Qt::CustomizeWindowHint
 }
 
 void MainWindow::setViewWidget(QWidget *widget)
@@ -181,4 +184,5 @@ void MainWindow::closeEvent(QCloseEvent *event)
 void MainWindow::setProxyWidget(QGraphicsProxyWidget *value)
 {
     this->proxy = value;
+    value->setGraphicsEffect(&this->blur);
 }
