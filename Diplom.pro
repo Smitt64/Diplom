@@ -7,6 +7,7 @@ SUBDIRS          += \
                  src/plugins/puzzlequest \
                  src/plugins/reports
 
+
 android-g++ {
 OTHER_FILES += \
     android/src/eu/licentia/necessitas/industrius/QtApplication.java \
