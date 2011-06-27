@@ -189,7 +189,7 @@ void TextEditor::textRight()
 
 void TextEditor::insertImage()
 {
-    QString fileName = QFileDialog::getOpenFileName(this, "Открыть изображение...");
+    QString fileName = QFileDialog::getOpenFileName(this, tr("Открыть изображение..."));
 
     if(!fileName.isEmpty())
     {
@@ -214,13 +214,13 @@ void TextEditor::insertImage()
             else
             {
                 QMessageBox msg(this);
-                QPushButton *insert = msg.addButton("Вставить существующий", QMessageBox::ActionRole);
-                QPushButton *rename = msg.addButton("Переименовать", QMessageBox::ActionRole);
+                QPushButton *insert = msg.addButton(tr("Вставить существующий"), QMessageBox::ActionRole);
+                QPushButton *rename = msg.addButton(tr("Переименовать"), QMessageBox::ActionRole);
                 QPushButton *cancel = msg.addButton(QMessageBox::Cancel);
 
-                msg.setWindowTitle("Совпадение ресурсов");
-                msg.setText("Файл '" + f + "' уже существует в тесте.");
-                msg.setInformativeText("Выберите действие:");
+                msg.setWindowTitle(tr("Совпадение ресурсов"));
+                msg.setText(tr("Файл '%1' уже существует в тесте.").arg(f));
+                msg.setInformativeText(tr("Выберите действие:"));
 
                 msg.exec();
 
@@ -235,8 +235,8 @@ void TextEditor::insertImage()
                 {
                     bool ok;
                     f = "";
-                    f = QInputDialog::getText(this, "Добавление ресурса.",
-                                              "Введите новое имя:", QLineEdit::Normal,
+                    f = QInputDialog::getText(this, tr("Добавление ресурса."),
+                                              tr("Введите новое имя:"), QLineEdit::Normal,
                                               "", &ok);
 
                     if(ok && !f.isEmpty())

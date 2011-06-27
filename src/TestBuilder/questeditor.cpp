@@ -31,7 +31,7 @@ QuestEditor::QuestEditor(QuestPanel *panel, QWidget *parent) :
     {
         QListWidgetItem *item = this->ui->groupsList->item(0);
 
-        if(item->text() == "(Без темы)")
+        if(item->text() == tr("(Без темы)"))
             item->setCheckState(Qt::Checked);
     }
 
@@ -130,7 +130,7 @@ void QuestEditor::onEditAnswer()
 
 void QuestEditor::onRemoveAnswer()
 {
-    if(QMessageBox::question(this, "Удаление вопроса!", "Удалить вариант ответа?",
+    if(QMessageBox::question(this, tr("Удаление вопроса!"), tr("Удалить вариант ответа?"),
                              QMessageBox::Yes | QMessageBox::No, QMessageBox::No)
         == QMessageBox::Yes)
         delete this->ui->AnswerList->currentItem();

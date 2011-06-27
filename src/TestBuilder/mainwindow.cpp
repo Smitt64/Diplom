@@ -48,52 +48,74 @@ void MainWindow::changeEvent(QEvent *e)
 
 void MainWindow::setupInterface()
 {
-    QSettings settings("Depot", "TestBuilder", this);
+    QSettings settings;
     setupDockPanel();
-    questToolBar = new QToolBar("Вопросы", this);
+
+    /*currentDir = QDir::currentPath();
+    QStringList files;
+    files = currentDir.entryList(QStringList("editor_*.qm"),
+                                      QDir::Files | QDir::NoSymLinks);*/
+
+    /*lang = ui->menu->addMenu(tr("Язык"));
+    foreach(QString f, files)
+    {
+        QLocale locale(f.mid(7, 2));
+        QAction *buf = lang->addAction(locale.name());
+        buf->setCheckable(true);
+        buf->setData(f);
+        if(locale.name() == QLocale::system().name())
+        {
+            translator.load(f);
+            qApp->installTranslator(&translator);
+            buf->setChecked(true);
+        }
+        connect(buf, SIGNAL(triggered(bool)), this, SLOT(onChangeLocale(bool)));
+    }*/
+
+    questToolBar = new QToolBar(tr("Вопросы"), this);
     this->addToolBar(questToolBar);
 
-    newAction = new QAction(QIcon(pixFile("interface\\toolbar\\DocumentHS.png")), "Создать", this);
+    newAction = new QAction(QIcon(pixFile("interface\\toolbar\\DocumentHS.png")), tr("Создать"), this);
     newAction->setShortcut(QKeySequence::New);
-    openAction = new QAction(QIcon(pixFile("interface\\toolbar\\openHS.png")), "Открыть...", this);
+    openAction = new QAction(QIcon(pixFile("interface\\toolbar\\openHS.png")), tr("Открыть..."), this);
     openAction->setShortcut(QKeySequence::Open);
-    saveAction = new QAction(QIcon(pixFile("interface\\toolbar\\saveHS.png")), "Сохранить...", this);
+    saveAction = new QAction(QIcon(pixFile("interface\\toolbar\\saveHS.png")), tr("Сохранить..."), this);
     saveAction->setShortcut(QKeySequence::Save);
-    saveAsAction = new QAction(QIcon(pixFile("interface\\toolbar\\SaveAllHS.png")), "Сохранить как...", this);
+    saveAsAction = new QAction(QIcon(pixFile("interface\\toolbar\\SaveAllHS.png")), tr("Сохранить как..."), this);
     saveAsAction->setShortcut(QKeySequence::SaveAs);
-    printAction = new QAction(QIcon(pixFile("interface\\toolbar\\PrintHS.png")), "Печатать тест...", this);
+    printAction = new QAction(QIcon(pixFile("interface\\toolbar\\PrintHS.png")), tr("Печатать тест..."), this);
     printAction->setShortcut(QKeySequence::Print);
 
-    closeAction = new QAction("Закрыть", this);
+    closeAction = new QAction(tr("Закрыть"), this);
     closeAction->setShortcut(QKeySequence::Close);
 
-    testProp = new QAction(QIcon(pixFile("interface\\toolbar\\PropertiesHS.png")), "Настройки...", this);
+    testProp = new QAction(QIcon(pixFile("interface\\toolbar\\PropertiesHS.png")), tr("Настройки..."), this);
 
-    showRight = new QAction(QIcon(pixFile("interface\\toolbar\\Flag_redHS.png")), "Правильные ответы", this);
+    showRight = new QAction(QIcon(pixFile("interface\\toolbar\\Flag_redHS.png")), tr("Правильные ответы"), this);
     showRight->setCheckable(true);
 
-    showQuestTab = new QAction(QIcon(pixFile("interface\\toolbar\\InsertTabControlHS.png")), "Строка вопросов", this);
+    showQuestTab = new QAction(QIcon(pixFile("interface\\toolbar\\InsertTabControlHS.png")), tr("Строка вопросов"), this);
     showQuestTab->setCheckable(true);
     showQuestTab->setChecked(true);
 
-    showEndButton = new QAction(QIcon(pixFile("interface\\toolbar\\BreakpointHS.png")), "Кнопка 'Завершить'", this);
+    showEndButton = new QAction(QIcon(pixFile("interface\\toolbar\\BreakpointHS.png")), tr("Кнопка 'Завершить'"), this);
     showEndButton->setCheckable(true);
     showEndButton->setChecked(false);
 
-    showNextButton = new QAction(QIcon(pixFile("interface\\toolbar\\PreviousPageHS.png")), "Перемещение по вопросам", this);
+    showNextButton = new QAction(QIcon(pixFile("interface\\toolbar\\PreviousPageHS.png")), tr("Перемещение по вопросам"), this);
     showNextButton->setCheckable(true);
     showNextButton->setChecked(true);
 
     toolBtn = new QToolButton(this);
     toolBtn->setIcon(QIcon(pixFile("interface\\toolbar\\FormRunHS.png")));
     toolBtn->setPopupMode(QToolButton::InstantPopup);
-    QMenu *prevMenu = new QMenu("Предпросмотр", toolBtn);
+    QMenu *prevMenu = new QMenu(tr("Предпросмотр"), toolBtn);
     prevMenu->setIcon(QIcon(pixFile("interface\\toolbar\\FormRunHS.png")));
     toolBtn->setMenu(prevMenu);
 
-    viewMainPage = new QAction("Выбор группы и студента", this);
+    viewMainPage = new QAction(tr("Выбор группы и студента"), this);
     viewMainPage->setShortcut(QKeySequence(Qt::CTRL + Qt::SHIFT + Qt::Key_M));
-    viewComment = new QAction("Коментарий", this);
+    viewComment = new QAction(tr("Коментарий"), this);
 
     prevMenu->addAction(viewMainPage);
     prevMenu->addAction(viewComment);
@@ -141,7 +163,7 @@ void MainWindow::setupInterface()
 
     updateRecentFileActions();
 
-    QAction *exitAction = new QAction("Выход", this);
+    QAction *exitAction = new QAction(tr("Выход"), this);
     exitAction->setShortcut(QKeySequence::Quit);
     this->ui->fileMenu->addAction(exitAction);
 
@@ -198,11 +220,21 @@ void MainWindow::setupInterface()
     connect(this->ui->about, SIGNAL(triggered()), this, SLOT(about()));
 }
 
+void MainWindow::onChangeLocale(bool value)
+{
+   /* QAction *action = qobject_cast<QAction*>(sender());
+    for(int i = 0; i < lang->actions().count(); i++)
+        lang->actions().at(i)->setChecked(false);
+
+    action->setChecked(true);
+    translator.load(action->data().toString());*/
+}
+
 void MainWindow::about()
 {
     QMessageBox msg(this);
     msg.setIconPixmap(this->windowIcon().pixmap(70, QIcon::Normal, QIcon::On));
-    msg.setWindowTitle("О программе...");
+    msg.setWindowTitle(tr("О программе..."));
     msg.setText(MainWindow::textFile("interface\\about.html"));
     msg.exec();
 }
@@ -217,7 +249,7 @@ void MainWindow::onChangeStyle()
     action->setChecked(true);
     qApp->setStyle(action->text());
 
-    QSettings settings("Depot", "TestBuilder", this);
+    QSettings settings;
     settings.setValue("style", action->text());
 }
 
@@ -353,8 +385,8 @@ void MainWindow::openTest(QString fileName)
     if(!this->panel->passwordOnOpen.isEmpty())
     {
         bool ok;
-        QString pass = QInputDialog::getText(this, "Тест защищен...",
-                                             "Введите пароль для разблокировки:", QLineEdit::Password,
+        QString pass = QInputDialog::getText(this, tr("Тест защищен..."),
+                                             tr("Введите пароль для разблокировки:"), QLineEdit::Password,
                                              "", &ok);
         if(!ok || pass.isEmpty() || this->panel->passwordOnOpen != pass)
         {
@@ -378,7 +410,7 @@ void MainWindow::openTest(QString fileName)
     updateQuestTree();
     updateQuestList();
 
-    this->setWindowTitle(QString("TestBuilder - %1").arg(fileName));
+    this->setWindowTitle(QString(tr("TestBuilder - %1")).arg(fileName));
     setCurrentFile(fileName);
 }
 
@@ -401,7 +433,7 @@ void MainWindow::onCloseTest()
 
         this->updateTestToolControls(false);
 
-        this->setWindowTitle("TestBuilder");
+        this->setWindowTitle(tr("TestBuilder"));
 
         delete this->panel;
         this->panel = NULL;
@@ -446,7 +478,7 @@ void MainWindow::openRecentFile()
 
 void MainWindow::updateRecentFileActions()
 {
-    QSettings settings("Depot", "TestBuilder", this);
+    QSettings settings;
     QStringList files = settings.value("recentFileList").toStringList();
 
     int numRecentFiles = qMin(files.size(), (int)MaxRecentFiles);
@@ -469,7 +501,7 @@ QString MainWindow::strippedName(const QString &fullFileName)
 
 void MainWindow::setCurrentFile(QString fileName)
 {
-    QSettings settings("Depot", "TestBuilder", this);
+    QSettings settings;
     QStringList files = settings.value("recentFileList").toStringList();
     files.removeAll(fileName);
     files.prepend(fileName);
@@ -488,7 +520,7 @@ void MainWindow::updateQuestTree()
     QStringList list = this->panel->getTopicNames();
 
     QTreeWidgetItem *item = new QTreeWidgetItem;
-    item->setText(0, "Темы");
+    item->setText(0, tr("Темы"));
     item->setIcon(0, QIcon(pixFile("interface\\icons\\book.png")));
     item->setData(0, Qt::UserRole, 1);
     this->questTree->addTopLevelItem(item);
@@ -550,13 +582,13 @@ void MainWindow::onConnectionSettings()
 
     if(dlg.exec() == QDialog::Accepted)
     {
-        QSettings settings("Depot", "TestBuilder", this);
+        QSettings settings;
         settings.setValue("server", dlg.getServer());
         settings.setValue("port", dlg.getPort());
 
         if(this->db.databaseName() == "depot")
         {
-            if(QMessageBox::question(this, "Подключение.", "Переподключиться к базе данных?",
+            if(QMessageBox::question(this, tr("Подключение."), tr("Feather to be connected to a database?"),
                                   QMessageBox::Yes | QMessageBox::No) == QMessageBox::Yes)
             {
                 this->db.close();
@@ -573,7 +605,7 @@ void MainWindow::onConnectionSettings()
 
 void MainWindow::connectToDataBase()
 {
-    QSettings settings("Depot", "TestBuilder", this);
+    QSettings settings;
     //Строка подключения
     /*QString conStr = QString("DRIVER={MySql ODBC 5.1 Driver};SERVER=:host;PORT=:port;DATABASE=depot;")
                      + QString("USER=redactor;PASSWORD=NXkNEoZHQB");//redactor  NXkNEoZHQB
@@ -601,8 +633,8 @@ void MainWindow::connectToDataBase()
     if(!db.open())
     {
         QMessageBox dlg(this);
-        dlg.setText("Не удалось подключиться к базе данных!");
-        dlg.setInformativeText("Проверьте пареметры подключения.");
+        dlg.setText(tr("Не удалось подключиться к базе данных!"));
+        dlg.setInformativeText(tr("Проверьте пареметры подключения."));
         dlg.setDetailedText(db.lastError().text());
         dlg.setIcon(QMessageBox::Critical);
         if(dlg.exec() == QDialog::Accepted)
@@ -633,24 +665,24 @@ void MainWindow::setupDockPanel()
 
     this->ui->questDock->setWidget(wnd);
 
-    addQuestGroup = new QAction(QIcon(pixFile("interface\\toolbar\\AddGroup.png")), "Добавить тему", this);
+    addQuestGroup = new QAction(QIcon(pixFile("interface\\toolbar\\AddGroup.png")), tr("Добавить тему"), this);
     addQuestGroup->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_G));
-    addQuestion = new QAction(QIcon(pixFile("interface\\toolbar\\AddQuestion.png")), "Добавить вопрос", this);
+    addQuestion = new QAction(QIcon(pixFile("interface\\toolbar\\AddQuestion.png")), tr("Добавить вопрос"), this);
     addQuestion->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_Q));
-    editQuestGroup = new QAction(QIcon(pixFile("interface\\toolbar\\LegendHS.png")), "Редактировать список вопросов", this);
+    editQuestGroup = new QAction(QIcon(pixFile("interface\\toolbar\\LegendHS.png")), tr("Редактировать список вопросов"), this);
     editQuestGroup->setShortcut(QKeySequence(Qt::CTRL + Qt::SHIFT + Qt::Key_G));
 
-    renameQuestion = new QAction(QIcon(pixFile("interface\\toolbar\\RenameQuestion.png")), "Переименовать вопрос", this);
+    renameQuestion = new QAction(QIcon(pixFile("interface\\toolbar\\RenameQuestion.png")), tr("Переименовать вопрос"), this);
 
-    editQuestion = new QAction(QIcon(pixFile("interface\\toolbar\\EditInformationHS.png")), "Редактировать вопрос", this);
+    editQuestion = new QAction(QIcon(pixFile("interface\\toolbar\\EditInformationHS.png")), tr("Редактировать вопрос"), this);
 
-    removeGroup = new QAction(QIcon(pixFile("interface\\toolbar\\remove.png")), "Удалить тему", this);
-    removeQuestion = new QAction(QIcon(pixFile("interface\\toolbar\\remove.png")), "Удалить вопрос", this);
-    removeFromGroup = new QAction(QIcon(pixFile("interface\\toolbar\\removeFromGroup.png")), "Удалить вопрос из группы", this);
+    removeGroup = new QAction(QIcon(pixFile("interface\\toolbar\\remove.png")), tr("Удалить тему"), this);
+    removeQuestion = new QAction(QIcon(pixFile("interface\\toolbar\\remove.png")), tr("Удалить вопрос"), this);
+    removeFromGroup = new QAction(QIcon(pixFile("interface\\toolbar\\removeFromGroup.png")), tr("Удалить вопрос из группы"), this);
 
-    moveUp = new QAction(QIcon(pixFile("interface\\toolbar\\Up.png")), "Переместить вверх.", this);
+    moveUp = new QAction(QIcon(pixFile("interface\\toolbar\\Up.png")), tr("Переместить вверх."), this);
     moveUp->setEnabled(false);
-    moveDown = new QAction(QIcon(pixFile("interface\\toolbar\\Down.png")), "Переместить вниз.", this);
+    moveDown = new QAction(QIcon(pixFile("interface\\toolbar\\Down.png")), tr("Переместить вниз."), this);
     moveDown->setEnabled(false);
 
     dockBar->addAction(addQuestGroup);
@@ -714,8 +746,8 @@ void MainWindow::onRenameQuestion()
     QString oldName = this->questList->currentItem()->text();
 
     bool ok = false;
-    QString text = QInputDialog::getText(this, "Переименовать вопрос...",
-                                         "Введите новое имя для вопроса:", QLineEdit::Normal,
+    QString text = QInputDialog::getText(this, tr("Переименовать вопрос..."),
+                                         tr("Введите новое имя для вопроса:"), QLineEdit::Normal,
                                          "", &ok);
     if(ok && !text.isEmpty())
     {
@@ -746,8 +778,8 @@ void MainWindow::onEditQuestGroup()
 
             if(groupName.isEmpty())
             {
-                QMessageBox::warning(this, "Предепреждение!",
-                                     "Имя группы не может быть пустым!");
+                QMessageBox::warning(this, tr("Предепреждение!"),
+                                     tr("Имя группы не может быть пустым!"));
                 return;
             }
 
@@ -887,14 +919,13 @@ void MainWindow::closeEvent(QCloseEvent *event)
 void MainWindow::onAddQuestGroup()
 {
     bool ok;
-    QString text = QInputDialog::getText(this, "Новая тема",
-                                         "Введите название темы:", QLineEdit::Normal,
+    QString text = QInputDialog::getText(this, tr("Новая тема"),
+                                         tr("Введите название темы:"), QLineEdit::Normal,
                                          "", &ok);
     if(ok && !text.isEmpty())
     {
         if(this->panel->hasTopic(text))
-            QMessageBox::critical(this, "Ошибка!", "Тема '" + text +
-                                  "' уже существует");
+            QMessageBox::critical(this, tr("Ошибка!"), tr("Тема '%1' уже существует!").arg(text));
         else
         {
             this->panel->addTopic(text);
@@ -998,8 +1029,8 @@ void MainWindow::onRemoveFromGroup()
 void MainWindow::onRemoveGroup()
 {
     QString group = this->questTree->currentItem()->text(0);
-    if(QMessageBox::question(this, "Удаление темы.", "Удалить тему '" + group
-                          +"'?", QMessageBox::Yes | QMessageBox::No, QMessageBox::No) == QMessageBox::Yes)
+    if(QMessageBox::question(this, tr("Удаление темы."), tr("Удалить тему '%1'?").arg(group),
+                             QMessageBox::Yes | QMessageBox::No, QMessageBox::No) == QMessageBox::Yes)
     {
 
         this->panel->removeTopic(group);

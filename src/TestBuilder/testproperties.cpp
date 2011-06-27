@@ -35,7 +35,7 @@ TestProperties::TestProperties(QWidget *panel, QWidget *parent) :
     }
     else
     {
-        QMessageBox::critical(this, "Ошибка!", "Не удалось оновить список предметов!\n" +
+        QMessageBox::critical(this, tr("Ошибка!"), tr("Не удалось обновить список предметов!\n") +
                               query.lastError().text());
     }
 
@@ -54,7 +54,7 @@ TestProperties::TestProperties(QWidget *panel, QWidget *parent) :
     }
     else
     {
-        QMessageBox::critical(this, "Ошибка!", "Не удалось оновить список специальностей!\n" +
+        QMessageBox::critical(this, tr("Ошибка!"), tr("Не удалось оновить список специальностей!\n") +
                               query.lastError().text());
     }
 
@@ -192,7 +192,7 @@ void TestProperties::specialListUpdated(QListWidgetItem *item)
         }
     }
     else
-        QMessageBox::warning(this, "Ошибка!", "Тест должен принадлежать хотяб одной специальности!");
+        QMessageBox::warning(this, tr("Ошибка!"), tr("Тест должен принадлежать хотяб одной специальности!"));
 }
 
 QByteArray TestProperties::getgroupsSql()
@@ -206,7 +206,7 @@ void TestProperties::onAddAnswer()
 {
     QListWidgetItem *item = new QListWidgetItem;
     item->setFlags(Qt::ItemIsEditable | Qt::ItemIsSelectable | Qt::ItemIsEnabled);
-    item->setText("Двойной клик для изменения...");
+    item->setText(tr("Двойной клик для изменения..."));
     this->ui->answerList->addItem(item);
 }
 
@@ -378,14 +378,14 @@ void TestProperties::setEditorParam(QByteArray param)
             if(type == 1)
             {
                 this->ui->tableWidget->setRowCount(2);
-                this->ui->tableWidget->verticalHeaderItem(0)->setText("Зачет");
-                this->ui->tableWidget->verticalHeaderItem(1)->setText("Не зачет");
+                this->ui->tableWidget->verticalHeaderItem(0)->setText(tr("Зачет"));
+                this->ui->tableWidget->verticalHeaderItem(1)->setText(tr("Не зачет"));
             }
             else
             {
                 this->ui->tableWidget->setRowCount(4);
                 QStringList list;
-                list << "Отлично(5)" << "Хорошо(4)" << "Уд(3)" << "Плохо(2)";
+                list << tr("Отлично(5)") << tr("Хорошо(4)") << tr("Уд(3)") << tr("Плохо(2)");
                 this->ui->tableWidget->setVerticalHeaderLabels(list);
             }
 
@@ -412,13 +412,13 @@ void TestProperties::setEditorParam(QByteArray param)
         }
     }
     else
-        QMessageBox::critical(this, "Ошибка разбора теста", err);
+        QMessageBox::critical(this, tr("Ошибка разбора теста"), err);
 }
 
 void TestProperties::onLoadButton()
 {
-    QString fileName = QFileDialog::getOpenFileName(this, "Открыть список ответов...", "\\",
-                                                    "Текст (*.txt)");
+    QString fileName = QFileDialog::getOpenFileName(this, tr("Открыть список ответов..."), "\\",
+                                                    tr("Текст (*.txt)"));
 
     if(!fileName.isEmpty())
     {
@@ -427,9 +427,9 @@ void TestProperties::onLoadButton()
         {
             bool ok;
             QString content = file.readAll();
-            QString text = QInputDialog::getText(this, "Параметры загрузки",
-                                                      "Введите разделитель между словами:", QLineEdit::Normal,
-                                                      "", &ok);
+            QString text = QInputDialog::getText(this, tr("Параметры загрузки"),
+                                                 tr("Введите разделитель между словами:"), QLineEdit::Normal,
+                                                 "", &ok);
             if(ok && !text.isEmpty())
                 content = content.replace(text, "\n");
 
@@ -446,8 +446,8 @@ void TestProperties::onLoadButton()
             }while(!line.isNull());
         }
         else
-            QMessageBox::critical(this, "Ошибка открытия файла!",
-                                  "Не удалось открыть файл '" + fileName + "'!");
+            QMessageBox::critical(this, tr("Ошибка открытия файла!"),
+                                  tr("Не удалось открыть файл '%1'!").arg(fileName));
     }
 }
 
@@ -625,14 +625,14 @@ void TestProperties::onChangeMarkType(int index)
     if(index == 1)
     {
         this->ui->tableWidget->setRowCount(2);
-        this->ui->tableWidget->verticalHeaderItem(0)->setText("Зачет");
-        this->ui->tableWidget->verticalHeaderItem(1)->setText("Не зачет");
+        this->ui->tableWidget->verticalHeaderItem(0)->setText(tr("Зачет"));
+        this->ui->tableWidget->verticalHeaderItem(1)->setText(tr("Не зачет"));
 
-        this->ui->tableWidget->item(0, 0)->setText("Зачет");
+        this->ui->tableWidget->item(0, 0)->setText(tr("Зачет"));
         this->ui->tableWidget->item(0, 1)->setText("5");
         this->ui->tableWidget->item(0, 2)->setText("50");
 
-        this->ui->tableWidget->item(1, 0)->setText("Не Зачет");
+        this->ui->tableWidget->item(1, 0)->setText(tr("Не Зачет"));
         this->ui->tableWidget->item(1, 1)->setText("2");
         this->ui->tableWidget->item(1, 2)->setText("0");
     }
@@ -640,22 +640,22 @@ void TestProperties::onChangeMarkType(int index)
     {
         this->ui->tableWidget->setRowCount(4);
         QStringList list;
-        list << "Отлично(5)" << "Хорошо(4)" << "Уд(3)" << "Плохо(2)";
+        list << tr("Отлично(5)") << tr("Хорошо(4)") << tr("Уд(3)") << tr("Плохо(2)");
         this->ui->tableWidget->setVerticalHeaderLabels(list);
 
-        this->ui->tableWidget->setItem(0, 0, new QTableWidgetItem("Отлично"));
+        this->ui->tableWidget->setItem(0, 0, new QTableWidgetItem(tr("Отлично")));
         this->ui->tableWidget->setItem(0, 1, new QTableWidgetItem("5"));
         this->ui->tableWidget->setItem(0, 2, new QTableWidgetItem("85"));
 
-        this->ui->tableWidget->setItem(1, 0, new QTableWidgetItem("Хорошо"));
+        this->ui->tableWidget->setItem(1, 0, new QTableWidgetItem(tr("Хорошо")));
         this->ui->tableWidget->setItem(1, 1, new QTableWidgetItem("4"));
         this->ui->tableWidget->setItem(1, 2, new QTableWidgetItem("70"));
 
-        this->ui->tableWidget->setItem(2, 0, new QTableWidgetItem("Удовлетворительно"));
+        this->ui->tableWidget->setItem(2, 0, new QTableWidgetItem(tr("Удовлетворительно")));
         this->ui->tableWidget->setItem(2, 1, new QTableWidgetItem("3"));
         this->ui->tableWidget->setItem(2, 2, new QTableWidgetItem("50"));
 
-        this->ui->tableWidget->setItem(3, 0, new QTableWidgetItem("Плохо"));
+        this->ui->tableWidget->setItem(3, 0, new QTableWidgetItem(tr("Плохо")));
         this->ui->tableWidget->setItem(3, 1, new QTableWidgetItem("2"));
         this->ui->tableWidget->setItem(3, 2, new QTableWidgetItem("0"));
     }

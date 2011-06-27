@@ -15,10 +15,14 @@ int main(int argc, char *argv[])
     QTextCodec::setCodecForLocale(codec);
 
     QApplication a(argc, argv);
-    QTranslator qtTranslator;
-    qtTranslator.load("qt_" + QLocale::system().name(),
-                     QLibraryInfo::location(QLibraryInfo::TranslationsPath));
-    a.installTranslator(&qtTranslator);
+    QCoreApplication::setOrganizationName("Smitt64Company");
+    QCoreApplication::setApplicationName("TestBuilder");
+
+    QTranslator translator;
+    if(!translator.load("editor_" + QLocale::system().name()))
+        translator.load("editor_en_EN");
+    a.installTranslator(&translator);
+
     MainWindow::initResSystem();
 
     qsrand((unsigned)time(new time_t()));
@@ -27,7 +31,7 @@ int main(int argc, char *argv[])
     QSplashScreen splash(map);
     splash.show();
     a.processEvents();
-    a.setStyle("windowsmodernstyle");//windowsmodernstyle NorwegianWood
+    a.setStyle("windowsmodernstyle");
 
     MainWindow w;
     w.connectToDataBase();

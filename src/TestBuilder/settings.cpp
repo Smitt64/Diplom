@@ -8,7 +8,7 @@ Settings::Settings(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    QSettings settings("Depot", "TestBuilder", this);
+    QSettings settings;
     this->ui->lineEdit->setText(settings.value("server", "127.0.0.1").toString());
     this->ui->spinBox->setValue(settings.value("port", "3306").toInt());
 }
