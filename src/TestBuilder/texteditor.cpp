@@ -14,6 +14,50 @@
 #include <qlabel.h>
 #include "ui_texteditor.h"
 
+TextEditView::TextEditView(QuestPanel *value, QWidget *parent) :
+    QMainWindow(parent),
+    panel(value)
+{
+    textEdit = new TextEditWidget(value);
+
+    fontSizeBox = new QComboBox;
+    fontSizeBox->addItems(QStringList()
+                          << "9"
+                          << "10"
+                          << "11"
+                          << "12"
+                          << "14"
+                          << "16"
+                          << "18"
+                          << "20"
+                          << "22"
+                          << "24"
+                          << "26"
+                          << "28"
+                          << "36"
+                          << "48"
+                          << "72");
+    fontBox = new QFontComboBox;
+
+    setCentralWidget(textEdit);
+    formating = addToolBar(tr("‘орматирование"));
+    formating->addWidget(fontSizeBox);
+    formating->addWidget(fontBox);
+    formating->addSeparator();
+
+    actionBold = formating->addAction(QIcon(MainWindow::pixFile("interface\\icons\\boldhs.png")), tr("∆ырный"));
+    actionItalic = formating->addAction(QIcon(MainWindow::pixFile("interface\\icons\\ItalicHS.png")), tr(" урсив"));
+    formating->addSeparator();
+    actionFontColor = formating->addAction(tr("÷вет текста"));
+}
+
+void TextEditView::updateColor()
+{
+
+}
+
+////////////////////////////////////////////////////////////////
+
 TextEditor::TextEditor(QuestPanel *pan, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::TextEditor),
@@ -24,9 +68,9 @@ TextEditor::TextEditor(QuestPanel *pan, QWidget *parent) :
     this->setLayout(this->ui->mainlLayout);
     textEdit = new TextEditWidget(pan);
     textEdit->setAcceptRichText(true);
-    this->ui->mainlLayout->insertWidget(2, textEdit);
+    this->ui->mainlLayout->insertWidget(2, new TextEditView(pan));
 
-    this->ui->boldlButton->setIcon(QIcon(MainWindow::pixFile("interface\\icons\\boldhs.png")));
+    /*this->ui->boldlButton->setIcon(QIcon(MainWindow::pixFile("interface\\icons\\boldhs.png")));
     this->ui->italiclButton->setIcon(QIcon(MainWindow::pixFile("interface\\icons\\ItalicHS.png")));
     this->ui->colorButton->setIcon(QIcon(MainWindow::pixFile("interface\\icons\\Color_fontHS.png")));
 
@@ -65,7 +109,7 @@ TextEditor::TextEditor(QuestPanel *pan, QWidget *parent) :
     connect(this->textEdit, SIGNAL(currentCharFormatChanged(QTextCharFormat)),
             this, SLOT(currentCharFormatChanged(QTextCharFormat)));
 
-    connect(this->ui->comboStyle, SIGNAL(activated(int)), this, SLOT(textStyle(int)));
+    connect(this->ui->comboStyle, SIGNAL(activated(int)), this, SLOT(textStyle(int)));*/
 }
 
 TextEditor::~TextEditor()
@@ -85,13 +129,13 @@ void TextEditor::changeEvent(QEvent *e)
     }
 }
 
-void TextEditor::loadResources()
+/*void TextEditor::loadResources()
 {
     for(int i = 0; i < this->panel->resources.count(); i++)
         this->textEdit->document()->addResource(QTextDocument::ImageResource,
                                                     QUrl(this->panel->resources[i]),
                                                     this->panel->getPixResource(this->panel->resources[i]));
-}
+}*/
 
 QString TextEditor::getPlainText()
 {

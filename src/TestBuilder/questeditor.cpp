@@ -86,7 +86,7 @@ void QuestEditor::onAddAnswer()
 {
     TextEditor editor(this->pan, this);
 
-    editor.loadResources();
+    //editor.loadResources();
 
     if(editor.exec() == QDialog::Accepted)
     {
@@ -111,7 +111,7 @@ void QuestEditor::onEditAnswer()
     QListWidgetItem *item = this->ui->AnswerList->currentItem();
 
     TextEditor editor(this->pan, this);
-    editor.loadResources();
+    //editor.loadResources();
     editor.setHtml(item->data(Qt::UserRole).toString());
 
     if(editor.exec() == QDialog::Accepted)

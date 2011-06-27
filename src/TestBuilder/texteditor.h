@@ -13,6 +13,28 @@ namespace Ui {
     class TextEditor;
 }
 
+class TextEditView : public QMainWindow
+{
+    Q_OBJECT
+public:
+    TextEditView(QuestPanel *pan, QWidget *parent = 0);
+   // FSHANDLE
+
+private slots:
+    void updateColor();
+
+private:
+    QuestPanel *panel;
+    QComboBox *fontSizeBox;
+    QFontComboBox *fontBox;
+    QToolBar *formating;
+
+    QAction *actionBold, *actionItalic;
+    QAction *actionFontColor;
+
+    TextEditWidget *textEdit;
+};
+
 class TextEditor : public QDialog {
     Q_OBJECT
 public:
@@ -25,7 +47,7 @@ public:
     QByteArray getHTMLData();
 
     void setDocument(QTextDocument *document);
-    void loadResources();
+    //void loadResources();
 
 protected:
     QuestPanel *panel;
