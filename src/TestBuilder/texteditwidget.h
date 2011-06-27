@@ -17,6 +17,7 @@ public slots:
 
 protected:
     virtual void insertFromMimeData(const QMimeData * source);
+    virtual QVariant loadResource(int type, const QUrl &name);
     QuestPanel *hHandle;
 
 };

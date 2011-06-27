@@ -39,3 +39,22 @@ void TextEditWidget::insertFromMimeData(const QMimeData *source)
         QTextEdit::insertFromMimeData(source);
     }
 }
+
+QVariant TextEditWidget::loadResource(int type, const QUrl &name)
+{
+    if(type == QTextDocument::ImageResource)
+    {
+        FileSystem::getInst()->fsOpen(&this->hHandle->questFile);
+        if(FileSystem::getInst()->fsHasFile(name.path(), &this->hHandle->questFile))
+        {
+            QPixmap data;
+            data.loadFromData(FileSystem::getInst()->fsGetFile(name.path(), &this->hHandle->questFile));
+            FileSystem::getInst()->fsClose(&this->hHandle->questFile);
+            return data;
+        }
+        else
+            return QTextEdit::loadResource(type, name);
+        FileSystem::getInst()->fsClose(&this->hHandle->questFile);
+    }
+    return QTextEdit::loadResource(type, name);
+}
