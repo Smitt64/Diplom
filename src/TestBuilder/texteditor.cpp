@@ -49,12 +49,60 @@ TextEditView::TextEditView(QuestPanel *value, QWidget *parent) :
     actionItalic = formating->addAction(QIcon(MainWindow::pixFile("interface\\icons\\ItalicHS.png")), tr("Курсив"));
     formating->addSeparator();
     actionFontColor = formating->addAction(tr("Цвет текста"));
+
+    connect(textEdit, SIGNAL(cursorPositionChanged()), this, SLOT(cursorPositionChanged()));
+    connect(textEdit, SIGNAL(currentCharFormatChanged(QTextCharFormat)),
+            this, SLOT(currentCharFormatChanged(QTextCharFormat)));
 }
 
 void TextEditView::updateColor()
 {
-
+    QPixmap map = MainWindow::pixFile("interface\\icons\Color_fontHS.png");
 }
+
+void TextEditView::mergeFormatOnWordOrSelection(QTextCharFormat format)
+{
+    QTextCursor cursor = textEdit->textCursor();
+    if(!cursor.hasSelection())
+        cursor.select(QTextCursor::WordUnderCursor);
+    cursor.mergeCharFormat(format);
+    textEdit->mergeCurrentCharFormat(format);
+}
+
+void TextEditView::cursorPositionChanged()
+{
+    //alignmentChanged(this->textEdit->alignment());
+}
+
+void TextEditView::currentCharFormatChanged(QTextCharFormat format)
+{
+    //fontChanged(format.font());
+}
+
+void TextEditView::fontChanged(QFont f)
+{
+    fontBox->setCurrentIndex(fontBox->findText(QFontInfo(f).family()));
+    fontSizeBox->setCurrentIndex(fontSizeBox->findText(QString::number(f.pointSize())));
+    //this->ui->boldlButton->setChecked(f.bold());
+    //this->ui->italiclButton->setChecked(f.italic());
+
+    //actionTextUnderline->setChecked(f.underline());
+}
+
+void TextEditView::alignmentChanged(Qt::Alignment a)
+{
+    /*this->ui->leftButton->setChecked(false);
+    this->ui->centerButton->setChecked(false);
+
+    if(a & Qt::AlignLeft)
+        this->ui->leftButton->setChecked(true);
+    else if(a & Qt::AlignHCenter)
+        this->ui->centerButton->setChecked(true);
+    else if (a & Qt::AlignRight)
+        this->ui->rightButton->setChecked(true);
+    else if (a & Qt::AlignJustify)
+        actionAlignJustify->setChecked(true);*/
+ }
 
 ////////////////////////////////////////////////////////////////
 
@@ -146,21 +194,21 @@ void TextEditor::textBold()
 {
     QTextCharFormat fmt;
     fmt.setFontWeight(this->ui->boldlButton->isChecked() ? QFont::Bold : QFont::Normal);
-    mergeFormatOnWordOrSelection(fmt);
+    //mergeFormatOnWordOrSelection(fmt);
 }
 
 void TextEditor::textItalic()
 {
     QTextCharFormat fmt;
     fmt.setFontItalic(this->ui->italiclButton->isChecked());
-    mergeFormatOnWordOrSelection(fmt);
+    //mergeFormatOnWordOrSelection(fmt);
 }
 
 void TextEditor::textFamily(QString f)
 {
     QTextCharFormat fmt;
     fmt.setFontFamily(f);
-    mergeFormatOnWordOrSelection(fmt);
+    //mergeFormatOnWordOrSelection(fmt);
 }
 
 void TextEditor::textSize(QString p)
@@ -170,7 +218,7 @@ void TextEditor::textSize(QString p)
     {
         QTextCharFormat fmt;
         fmt.setFontPointSize(pointSize);
-        mergeFormatOnWordOrSelection(fmt);
+        //mergeFormatOnWordOrSelection(fmt);
     }
 }
 
@@ -181,10 +229,10 @@ void TextEditor::textColor()
         return;
     QTextCharFormat fmt;
     fmt.setForeground(col);
-    mergeFormatOnWordOrSelection(fmt);
+    //mergeFormatOnWordOrSelection(fmt);
 }
 
-void TextEditor::mergeFormatOnWordOrSelection(QTextCharFormat format)
+/*void TextEditor::mergeFormatOnWordOrSelection(QTextCharFormat format)
 {
     QTextCursor cursor = this->textEdit->textCursor();
     if(!cursor.hasSelection())
@@ -196,9 +244,9 @@ void TextEditor::mergeFormatOnWordOrSelection(QTextCharFormat format)
 void TextEditor::cursorPositionChanged()
 {
     alignmentChanged(this->textEdit->alignment());
-}
+}*/
 
-void TextEditor::alignmentChanged(Qt::Alignment a)
+/*void TextEditor::alignmentChanged(Qt::Alignment a)
 {
     this->ui->leftButton->setChecked(false);
     this->ui->centerButton->setChecked(false);
@@ -209,26 +257,26 @@ void TextEditor::alignmentChanged(Qt::Alignment a)
         this->ui->centerButton->setChecked(true);
     else if (a & Qt::AlignRight)
         this->ui->rightButton->setChecked(true);
-    /*else if (a & Qt::AlignJustify)
-        actionAlignJustify->setChecked(true);*/
- }
+    else if (a & Qt::AlignJustify)
+        actionAlignJustify->setChecked(true);
+ }*/
 
 void TextEditor::textLeft()
 {
     this->textEdit->setAlignment(Qt::AlignLeft | Qt::AlignAbsolute);
-    alignmentChanged(this->textEdit->alignment());
+    //alignmentChanged(this->textEdit->alignment());
 }
 
 void TextEditor::textCenter()
 {
     this->textEdit->setAlignment(Qt::AlignHCenter);
-    alignmentChanged(this->textEdit->alignment());
+    //alignmentChanged(this->textEdit->alignment());
 }
 
 void TextEditor::textRight()
 {
     this->textEdit->setAlignment(Qt::AlignRight | Qt::AlignAbsolute);
-    alignmentChanged(this->textEdit->alignment());
+    //alignmentChanged(this->textEdit->alignment());
 }
 
 void TextEditor::insertImage()
@@ -296,20 +344,10 @@ void TextEditor::insertImage()
     }
 }
 
-void TextEditor::fontChanged(QFont f)
-{
-    this->ui->fontComboBox->setCurrentIndex(this->ui->fontComboBox->findText(QFontInfo(f).family()));
-    this->ui->comboBox->setCurrentIndex(this->ui->comboBox->findText(QString::number(f.pointSize())));
-    this->ui->boldlButton->setChecked(f.bold());
-    this->ui->italiclButton->setChecked(f.italic());
-
-    //actionTextUnderline->setChecked(f.underline());
-}
-
-void TextEditor::currentCharFormatChanged(QTextCharFormat format)
+/*void TextEditor::currentCharFormatChanged(QTextCharFormat format)
 {
     fontChanged(format.font());
-}
+}*/
 
 QByteArray TextEditor::getHTMLData()
 {

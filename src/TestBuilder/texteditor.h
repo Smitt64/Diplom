@@ -22,8 +22,14 @@ public:
 
 private slots:
     void updateColor();
+    void cursorPositionChanged();
+    void currentCharFormatChanged(QTextCharFormat format);
 
 private:
+    void mergeFormatOnWordOrSelection(QTextCharFormat format);
+    void alignmentChanged(Qt::Alignment a);
+    void fontChanged(QFont f);
+
     QuestPanel *panel;
     QComboBox *fontSizeBox;
     QFontComboBox *fontBox;
@@ -51,11 +57,11 @@ public:
 
 protected:
     QuestPanel *panel;
-    void mergeFormatOnWordOrSelection(QTextCharFormat format);
+    //void mergeFormatOnWordOrSelection(QTextCharFormat format);
     void changeEvent(QEvent *e);
 
-    void alignmentChanged(Qt::Alignment a);
-    void fontChanged(QFont f);
+    //void alignmentChanged(Qt::Alignment a);
+    //void fontChanged(QFont f);
 
     TextEditWidget *textEdit;
 
@@ -75,8 +81,8 @@ protected slots:
 
     void insertImage();
 
-    void cursorPositionChanged();
-    void currentCharFormatChanged(QTextCharFormat format);
+    //void cursorPositionChanged();
+    //void currentCharFormatChanged(QTextCharFormat format);
     void textStyle(int styleIndex);
 
     //void fontChanged(const QFont &f);
