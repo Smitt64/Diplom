@@ -59,7 +59,8 @@ RESOURCES += ../../res/res.qrc
 
 RC_FILE = ../../res/TestBuilder/sample.rc
 
-TRANSLATIONS = editor_ru.ts
+TRANSLATIONS = editor_en_EN.ts \
+               editor_ru_RU.ts
 
 linux-g++ {
     release: DESTDIR = ../../bin/release/unix/
